@@ -23,5 +23,9 @@ label {
     background-color: #0091e2 !important;
     /* Blue background */
     color: white !important;
+
+    font-size: 15px;
     /* White text */
+    padding: 10px;
+
 }
