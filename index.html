@@ -402,7 +402,7 @@
                     // Create a link element to trigger the download
                     var a = document.createElement('a');
                     a.href = url;
-                    a.download = `${mrnValue}.json`; // Set the file name to MRN value
+                    a.download = `./output/${mrnValue}.json`; // Set the file name to MRN value
                     document.body.appendChild(a); // Append to the body
                     a.click(); // Trigger the download
                     document.body.removeChild(a); // Remove the link
