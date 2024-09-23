@@ -29,3 +29,12 @@ label {
     padding: 10px;
 
 }
+
+.resizable-image {
+    height: 100%;
+    /* Set the height to 100% of the parent container */
+    width: auto;
+    /* Maintain aspect ratio */
+    display: block;
+    /* Ensure the image is displayed as a block element */
+}

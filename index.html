@@ -79,8 +79,8 @@
                 <label for="sex">Sex</label>
                 <select class="form-control" id="sex" name="sex" required>
                     <option value="" disabled selected>Enter Sex</option>
-                    <option value="african_american">Male</option>
-                    <option value="caucasian">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                     <option value="other">Other</option>
                 </select>
             </div>
@@ -102,57 +102,65 @@
             </br>
             <div class="form-group">
                 <label>Lesion Location Counts</label>
-                <table class="table" id="lesion_table">
-                    <thead>
-                        <tr>
-                            <th>Lesion Location</th>
-                            <th>Number of Lesions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Axillae</td>
-                            <td><input type="number" id="axillae" name="axillae" class="form-control number-box"
-                                    placeholder="0" min="0">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Groin</td>
-                            <td><input type="number" id="groin" name="groin" class="form-control number-box"
-                                    placeholder="0" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Buttocks</td>
-                            <td><input type="number" id="buttocks" name="buttocks" class="form-control number-box"
-                                    placeholder="0" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Inframammary</td>
-                            <td><input type="number" id="inframammary" name="inframammary"
-                                    class="form-control number-box" placeholder="0" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Perianal</td>
-                            <td><input type="number" id="perianal" name="perianal" class="form-control number-box"
-                                    placeholder="0" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Genital</td>
-                            <td><input type="number" id="genital" name="genital" class="form-control number-box"
-                                    placeholder="0" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Inner Thigh</td>
-                            <td><input type="number" id="inner_thigh" name="inner_thigh" class="form-control number-box"
-                                    placeholder="0" min="0"></td>
-                        </tr>
-                        <tr>
-                            <td>Other</td>
-                            <td><input type="number" id="other" name="other" class="form-control number-box"
-                                    placeholder="0" min="0"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-5">
+                        <table class="table" id="lesion_table">
+                            <thead>
+                                <tr>
+                                    <th>Lesion Location</th>
+                                    <th>Number of Lesions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Axillae</td>
+                                    <td><input type="number" id="axillae" name="axillae" class="form-control number-box"
+                                            placeholder="0" min="0" readonly>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Groin</td>
+                                    <td><input type="number" id="groin" name="groin" class="form-control number-box"
+                                            placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Buttocks</td>
+                                    <td><input type="number" id="buttocks" name="buttocks"
+                                            class="form-control number-box" placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Inframammary</td>
+                                    <td><input type="number" id="inframammary" name="inframammary"
+                                            class="form-control number-box" placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Perianal</td>
+                                    <td><input type="number" id="perianal" name="perianal"
+                                            class="form-control number-box" placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Genital</td>
+                                    <td><input type="number" id="genital" name="genital" class="form-control number-box"
+                                            placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Inner Thigh</td>
+                                    <td><input type="number" id="inner_thigh" name="inner_thigh"
+                                            class="form-control number-box" placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Other</td>
+                                    <td><input type="number" id="other" name="other" class="form-control number-box"
+                                            placeholder="0" min="0" readonly></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-5">
+                        <canvas id="body_map" style="display: hidden"> </canvas>
+                    </div>
+                </div>
+                <button id="clear_body_map" type="button" class="btn btn-dark">Clear Lesion Counts</button>
             </div>
 
             <div class="form-group">
@@ -223,13 +231,17 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Does the patient haave a family history of HS?</label>
+                <label class="form-label">Does the patient have a family history of HS?</label>
                 <div class="form-check">
                     <input type="checkbox" id="family_history" class="form-check-input" name="family_history">
                     <label class="form-check-label" for="family_history">Yes</label>
                 </div>
                 <div id="familyContainer" style="display: none;">
-                    <label class="form-label">Family Contact Information</label>
+                    <label class="form-label">Family Member Contact Information</label>
+                    <div class="form-group">
+                        <label for="familyRelation">Relation</label>
+                        <input type="text" class="form-control" id="familyRelation" placeholder="Relation to Patient">
+                    </div>
                     <div class="form-group">
                         <label for="familyEmail">Email</label>
                         <input type="email" class="form-control" id="familyEmail" placeholder="Email">
@@ -304,6 +316,10 @@
                             <input type="text" class="form-control" id="familyZip">
                         </div>
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="familyNotes">Notes</label>
+                        <input type="text" class="form-control" id="familyNotes" name="familyNotes">
+                    </div>
                 </div>
             </div>
 
@@ -374,11 +390,6 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
-        <div class="mt-4">
-            <h4>Submitted Data (JSON):</h4>
-            <pre id="jsonOutput"></pre>
-        </div>
     </div>
 
     <!-- jQuery, Bootstrap JS, and jQuery UI -->
@@ -400,6 +411,47 @@
         const proceduresContainer = document.getElementById('proceduresContainer');
         const familyContainer = document.getElementById('familyContainer');
         const familyCheckbox = document.getElementById('family_history');
+        const sexBox = document.getElementById('sex');
+        const canvas = document.getElementById('body_map');
+        const ctx = canvas.getContext("2d");
+        const lesionTable = document.getElementById('lesion_table');
+        var bodyImage = "";
+        var lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
+        const male_polygons = {
+            "Axillae1": [[100, 130], [118, 203], [83, 204]],
+            "Axillae2": [[214, 132], [198, 198], [232, 201]],
+            "Groin": [[131, 249], [189, 249], [168, 278], [146, 278]],
+            "Buttocks": [[406, 237], [458, 250], [509, 238], [518, 284], [459, 287], [401, 275]],
+            "Inframammary": [[105, 153], [209, 153], [201, 176], [111, 175]],
+            "Perianal": [[452, 239], [469, 240], [466, 248], [454, 249]],
+            "Genital": [[146, 279], [170, 280], [167, 294], [147, 293]],
+            "InnerThigh1": [[147, 297], [154, 297], [143, 391], [130, 389]],
+            "InnerThigh2": [[158, 297], [169, 297], [178, 395], [170, 395]],
+            "InnerThigh3": [[447, 289], [458, 291], [447, 380], [435, 375]],
+            "InnerThigh4": [[461, 291], [471, 382], [488, 381], [473, 289]],
+            "Axillae3": [[400, 140], [421, 198], [385, 202]],
+            "Axillae4": [[517, 138], [500, 202], [536, 204]]
+        }
+
+        const female_polygons = {
+            "Axillae1": [[119, 131], [134, 135], [133, 208], [112, 204]],
+            "Axillae2": [[212, 133], [225, 127], [234, 213], [214, 212]],
+            "Axillae3": [[427, 131], [439, 132], [443, 204], [422, 204]],
+            "Axillae4": [[521, 135], [534, 133], [538, 210], [519, 208]],
+            "Groin": [[149, 251], [201, 251], [195, 273], [161, 273]],
+            "Buttocks": [[426, 244], [480, 261], [536, 249], [543, 295], [494, 302], [480, 289], [469, 302], [416, 283]],
+            "Perianal": [[472, 248], [490, 249], [487, 259], [474, 259]],
+            "Genital": [[161, 276], [194, 275], [193, 293], [163, 292]],
+            "InnerThigh1": [[159, 298], [145, 427], [167, 426], [175, 300]],
+            "InnerThigh2": [[178, 300], [194, 298], [200, 437], [182, 430]],
+            "InnerThigh3": [[461, 304], [474, 305], [465, 419], [456, 417]],
+            "InnerThigh4": [[487, 307], [501, 305], [504, 421], [494, 421]],
+            "Inframammary": [[134, 169], [174, 155], [212, 172], [212, 184], [134, 181]]
+
+        }
+        var gender = "";
+        var response = "";
+        var polygon_dict = {}
 
         smokingHistoryCheckbox.addEventListener('change', function () {
             if (this.checked) {
@@ -434,6 +486,192 @@
                 proceduresContainer.style.display = 'none'; // Hide it if unchecked
             }
         });
+
+        function drawImage(gender_) {
+            if (gender_ == "male") {
+                bodyImage = new Image(600, 554);
+                canvas.height = bodyImage.height;
+                canvas.width = bodyImage.width;
+                bodyImage.onload = drawImageActualSize;
+                bodyImage.src = "./resources/img/male.png";
+            }
+            if (gender_ == "female") {
+                bodyImage = new Image(600, 554);
+                canvas.height = bodyImage.height;
+                canvas.width = bodyImage.width;
+                bodyImage.onload = drawImageActualSize;
+                bodyImage.src = "./resources/img/female.png";
+            }
+
+        }
+
+        function drawImageActualSize() {
+            //canvas.width = this.naturalWidth;
+            //canvas.height = this.naturalHeight;
+            ctx.drawImage(this, 0, 0, this.width, this.height);
+            drawPolygons();
+        }
+
+        sexBox.addEventListener('change', function () {
+            console.log("changed sex");
+            var tableHeight = lesionTable.offsetHeight;
+            if (this.value.trim().toLowerCase() == "male") {
+                console.log("male");
+                gender = "male";
+                drawImage(gender);
+            }
+            else if (this.value.trim().toLowerCase() == "female") {
+                console.log("female");
+                gender = "female";
+                drawImage(gender);
+            }
+            else {
+                return;
+            }
+
+        });
+
+        function drawPolygon(points, key) {
+            ctx.beginPath();
+            ctx.moveTo(points[0][0], points[0][1]);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i][0], points[i][1]);
+            }
+            ctx.closePath();
+
+            if (key.startsWith("Axillae")) {
+                ctx.fillStyle = "rgba(127,128,0,0.5)"
+            }
+            if (key.startsWith("Groin")) {
+                ctx.fillStyle = "rgba(255,0,0,0.5)"
+            }
+            if (key.startsWith("Buttocks")) {
+                ctx.fillStyle = "rgba(214,15,141,0.5)"
+            }
+            if (key.startsWith("Inframammary")) {
+                ctx.fillStyle = "rgba(50,255,0,0.5)"
+            }
+            if (key.startsWith("Perianal")) {
+                ctx.fillStyle = "rgba(20,255,255,0.5)"
+            }
+            if (key.startsWith("Genital")) {
+                ctx.fillStyle = "rgba(0,0,255,0.5)"
+            }
+            if (key.startsWith("InnerThigh")) {
+                ctx.fillStyle = "rgba(28,144,255,0.5)"
+            }
+            ctx.fill();
+            ctx.stroke();
+
+        }
+
+        // Function to draw all polygons on the canvas
+        async function drawPolygons() {
+            if (gender == "male") {
+                for (const key in male_polygons) {
+                    drawPolygon(male_polygons[key], key);
+                }
+            }
+            if (gender == "female") {
+                for (const key in female_polygons) {
+                    drawPolygon(female_polygons[key], key);
+                }
+            }
+        }
+
+        // Point-in-polygon function
+        function isPointInPolygon(point, polygon) {
+            let x = point[0], y = point[1];
+            let inside = false;
+
+            for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+                const xi = polygon[i][0], yi = polygon[i][1];
+                const xj = polygon[j][0], yj = polygon[j][1];
+
+                const intersect = ((yi > y) !== (yj > y)) &&
+                    (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+
+            return inside;
+        }
+
+        // Update counters on the page
+        function updateCounters() {
+            document.getElementById("axillae").value = lesioncountsdict["axillae"];
+            document.getElementById("groin").value = lesioncountsdict["groin"];
+            document.getElementById("buttocks").value = lesioncountsdict["buttocks"];
+            document.getElementById("perianal").value = lesioncountsdict["perianal"];
+            document.getElementById("inframammary").value = lesioncountsdict["inframammary"];
+            document.getElementById("genital").value = lesioncountsdict["genital"];
+            document.getElementById("inner_thigh").value = lesioncountsdict["innerthigh"];
+            document.getElementById("other").value = lesioncountsdict["other"];
+        }
+
+        // Check which body part is clicked based on coordinates
+        function checkBodyPart(x, y) {
+            const point = [x, y];
+            var validpoint = false;
+            if (gender == "male") {
+                for (const key in male_polygons) {
+                    if (isPointInPolygon(point, male_polygons[key])) {
+                        var key_str = key.replace(/[0-9]/g, '').toLowerCase();
+                        lesioncountsdict[key_str] += 1;
+                        validpoint = true;
+                        break;
+                    }
+                }
+            }
+            if (gender == "female") {
+                for (const key in female_polygons) {
+                    if (isPointInPolygon(point, female_polygons[key])) {
+                        var key_str = key.replace(/[0-9]/g, '').toLowerCase();
+                        lesioncountsdict[key_str] += 1;
+                        validpoint = true;
+                        break;
+                    }
+                }
+            }
+            if (!validpoint) {
+                lesioncountsdict["other"] += 1;
+            }
+            updateCounters();
+        }
+
+        function clearCounts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawImage(gender);
+            drawPolygons();
+            lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
+            updateCounters();
+
+        }
+
+        // Handle canvas click event
+        canvas.addEventListener("click", function (event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            console.log(x, y);
+
+            // Mark the clicked point on the canvas
+            ctx.beginPath();
+            ctx.arc(x, y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+
+            // Check which body part was clicked
+            checkBodyPart(x, y);
+        });
+
+        document.getElementById('clear_body_map').addEventListener('click', function () {
+            // Clear the body map or perform other actions
+            console.log('Clear Body Map button clicked');
+            // Example: Clear the canvas
+            clearCounts();
+        });
+
     </script>
 
     <script>
@@ -454,11 +692,12 @@
 
             if ($("#family_history").is(":checked")) {
                 var family_history_list = {
-                    email: $("familyEmail"),
-                    address: $("familyAddress"),
-                    city: $("familyCity"),
-                    state: $("familyState"),
-                    zip: $("familyZip")
+                    relation: $("familyRelation").val(),
+                    email: $("familyEmail").val(),
+                    address: $("familyAddress").val(),
+                    city: $("familyCity").val(),
+                    state: $("familyState").val(),
+                    zip: $("familyZip").val()
                 };
             }
             else {
@@ -495,6 +734,7 @@
                         family_contact: family_history_list,
                         smoking_history: $("#smoking_history").is(":checked"),
                         pack_history: $("#packHistory").val(),
+
                         comorbidities: comorbiditiesList, // Assuming this will hold selected comorbidities
                         current_hs_meds: currentMedsList, // Assuming this will hold selected current meds
                         disc_hs_meds: discontinuedMedsList, // Assuming this will hold selected discontinued meds
@@ -516,7 +756,7 @@
                     // Create a link element to trigger the download
                     var a = document.createElement('a');
                     a.href = url;
-                    a.download = `./output/${mrnValue}.json`; // Set the file name to MRN value
+                    a.download = `${mrnValue}.json`; // Set the file name to MRN value
                     document.body.appendChild(a); // Append to the body
                     a.click(); // Trigger the download
                     document.body.removeChild(a); // Remove the link

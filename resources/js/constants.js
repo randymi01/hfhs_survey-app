@@ -1,5 +1,6 @@
 const hsMedications = [
     "Clindamycin",
+    "Resorcinol Cream",
     "Doxycycline",
     "Contraceptives",
     "Spironolactone",
@@ -10,19 +11,32 @@ const hsMedications = [
     "Cyclosporine",
     "Ibuprofen",
     "Prednisone",
-    "Acetaminophen"
+    "Acetaminophen",
+    "Tetracycline (doxycycline, minocycline)",
+    "Spironolactone",
+    "Finasteride",
+    "Isotretinoin (Accutane)",
+    "Acitretin",
+    "Metformin",
+    "Dapsone",
+    "Cyclosporine",
+    "Methotrexate",
+    "Prednisone",
+    "Triamcinolone acetonide",
+    "Infliximab (Remicade)",
+    "Etanercept",
+    "Tofacitinib"
 ];
 
 // https://pubmed.ncbi.nlm.nih.gov/33493574/
 const comorbidities = [
     "Acne",
+    "Dyslipidemia",
     "PD (Pilonidal Disease)",
     "PG (Pyoderma Gangrenosum",
     "Herpes Zoster",
     "Polycystic Ovary Syndrome",
-    "Dyslipidemia",
-    "MetS",
-    "Major adverse cardiovascular events",
+    "Dyslipidemia (High Cholesterol)",
     "Musculoskeletal Disease",
     "Sexual Dysfunction",
     "Down Syndrome",
@@ -33,13 +47,13 @@ const comorbidities = [
     "Psoriasis",
     "Arthritis",
     "Asthma",
-    "Heart Disease",
+    "Cardiovascular Disease",
     "Cancer",
     "IBD (Inflammatory Bowel Disease)",
     "Lupus",
     "Depression",
     "Epilepsy",
-    "Anxiety",
+    "GAD (Generalized Anxiety Disorder)",
     "None"
 ];
 
