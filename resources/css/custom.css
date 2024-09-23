@@ -1,0 +1,27 @@
+.number-box {
+    width: 60px;
+    /* Adjust width to resemble a checkbox */
+    text-align: center;
+    /* Center the numbers */
+    margin-right: 10px;
+    /* Add space between boxes */
+}
+
+label {
+    font-weight: bold;
+}
+
+.mb-3.no-bold label {
+    font-weight: normal !important;
+}
+
+.badge {
+    margin-right: 10px;
+    /* Add space between badges */
+    margin-top: 5px;
+    /* Space above badges */
+    background-color: #0091e2 !important;
+    /* Blue background */
+    color: white !important;
+    /* White text */
+}

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HFHS HS Patient Demographic Survey</title>
+    <!-- Bootstrap CSS -->
+    <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery UI for text suggestions -->
+    <link rel="stylesheet" href="./resources/css/jquery-ui.css">
+    <link href="./resources/css/custom.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h2>HS Patient Demographic Survey</h2>
+        <form id="dataForm">
+            <!-- Text Box -->
+            <div class="form-group">
+                <label for="disease_state">Enrollment Number</label>
+                <div class="row">
+                    <!-- Disease select (10% width) -->
+                    <div class="col-2">
+                        <select class="form-control" id="disease_state" name="disease_state" required>
+                            <option value="HS">HS</option>
+                            <option value="HC">HC</option>
+                        </select>
+                    </div>
+                    <p>-</p>
+                    <!-- Other input (20% width) -->
+                    <div class="col-2">
+                        <input type="number" class="form-control" name="enrollment_number" id="enrollment_number"
+                            min="1" max="999" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Box -->
+            <div class="form-group">
+                <label for="first_name">Patient Name</label>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="text" class="form-control" name="first_name" id="first_name"
+                            placeholder="First Name" required>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name"
+                            required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mrn">MRN</label>
+                <input type="number" class="form-control" name="mrn" id="mrn" required>
+            </div>
+
+            <!-- Date Box -->
+            <div class="form-group">
+                <label for="dob">Patient Date of Birth</label>
+                <input type="date" class="form-control" id="dob" name="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label for="race">Race</label>
+                <select class="form-control" id="race" name="race" required>
+                    <option value="" disabled selected>Enter Race</option>
+                    <option value="african_american">African American</option>
+                    <option value="caucasian">Caucasian</option>
+                    <option value="asian">Asian</option>
+                    <option value="hispanic">Hispanic/Latino</option>
+                    <option value="native_american">Native American</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="sex">Sex</label>
+                <select class="form-control" id="sex" name="sex" required>
+                    <option value="" disabled selected>Enter Sex</option>
+                    <option value="african_american">Male</option>
+                    <option value="caucasian">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="bmi">BMI</label>
+                <input type="number" class="form-control" id="bmi" name="bmi" step="0.01" min="0"
+                    placeholder="Enter BMI">
+            </div>
+
+            <div class="form-group">
+                <label for="hurley">Hurley Stage</label>
+                <select class="form-control" id="hurley" name="hurley" required>
+                    <option value="" disabled selected>Enter Hurley Stage</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            </br>
+            <div class="form-group">
+                <label>Lesion Location Counts</label>
+                <table class="table" id="lesion_table">
+                    <thead>
+                        <tr>
+                            <th>Lesion Location</th>
+                            <th>Number of Lesions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Axillae</td>
+                            <td><input type="number" id="axillae" name="axillae" class="form-control number-box"
+                                    placeholder="0" min="0">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Groin</td>
+                            <td><input type="number" id="groin" name="groin" class="form-control number-box"
+                                    placeholder="0" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Buttocks</td>
+                            <td><input type="number" id="buttocks" name="buttocks" class="form-control number-box"
+                                    placeholder="0" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Inframammary</td>
+                            <td><input type="number" id="inframammary" name="inframammary"
+                                    class="form-control number-box" placeholder="0" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Perianal</td>
+                            <td><input type="number" id="perianal" name="perianal" class="form-control number-box"
+                                    placeholder="0" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Genital</td>
+                            <td><input type="number" id="genital" name="genital" class="form-control number-box"
+                                    placeholder="0" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Inner Thigh</td>
+                            <td><input type="number" id="inner_thigh" name="inner_thigh" class="form-control number-box"
+                                    placeholder="0" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td>Other</td>
+                            <td><input type="number" id="other" name="other" class="form-control number-box"
+                                    placeholder="0" min="0"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-group">
+                <label for="smoking_history" class="form-label">Does the patient have a smoking history?</label>
+                <div class="form-check">
+                    <input type="checkbox" id="smoking_history" class="form-check-input">
+                    <label class="form-check-label" for="smoking_history">Yes</label>
+                </div>
+                <div class="mb-3" id="packHistoryContainer" style="display: none;">
+                    <label for="packHistory" class="form-label">Pack History:</label>
+                    <input type="number" id="packHistory" name="pack_history" class="form-control"
+                        placeholder="Packs per Day" min="0">
+                </div>
+            </div>
+
+            <!-- Checkbox morbidities
+            <div class="form-group">
+                <label class="form-label" style="font-weight: bold">Comorbidities:</label>
+                <div class="mb-3 no-bold">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="diabetes" name="comorbidities"
+                            value="diabetes">
+                        <label class="form-check-label" for="diabetes">Diabetes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="obesity" name="comorbidities"
+                            value="obesity">
+                        <label class="form-check-label" for="obesity">Obesity</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="hypertension" name="comorbidities"
+                            value="hypertension">
+                        <label class="form-check-label" for="hypertension">Hypertension</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="crohns" name="comorbidities" value="crohns">
+                        <label class="form-check-label" for="crohns">Crohn's Disease</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="psoriasis" name="comorbidities"
+                            value="psoriasis">
+                        <label class="form-check-label" for="psoriasis">Psoriasis</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="arthritis" name="comorbidities"
+                            value="arthritis">
+                        <label class="form-check-label" for="arthritis">Arthritis</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="otherCheckbox" name="comorbidities"
+                            value="other">
+                        <label class="form-check-label" for="otherCheckbox">Other</label>
+                    </div>
+                    <div class="mb-3" id="otherInputContainer" style="display: none;">
+                        <input type="text" id="otherInput" class="form-control mt-2"
+                            placeholder="Please specify (seperate conditions with ',')" name="other" />
+                    </div>
+                </div>
+            </div>
+        -->
+            <div class="form-group">
+                <label class="form-label" for="comorbidities">Select Comorbidities</label>
+                <div class="suggestions-container">
+                    <input type="text" id="comorbidities" class="form-control"
+                        placeholder="Type to search, if not found press enter to add new item..." />
+                </div>
+                <div id="selected-comorbidities" class="mt-2"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="current_hs_meds">Select Current HS Medications</label>
+                <div class="suggestions-container">
+                    <input type="text" id="current_hs_meds" class="form-control"
+                        placeholder="Type to search, if not found press enter to add new item..." />
+                </div>
+                <div id="selected-curr-hs-meds" class="mt-2"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="disc_hs_meds">Select Discontinued HS Medications</label>
+                <div class="suggestions-container">
+                    <input type="text" id="disc_hs_meds" class="form-control"
+                        placeholder="Type to search, if not found press enter to add new item..." />
+                </div>
+                <div id="selected-disc-hs-meds" class="mt-2"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Is the patient on a biologic?</label>
+                <div class="form-check">
+                    <input type="checkbox" id="biologics_history" class="form-check-input">
+                    <label class="form-check-label" for="biologics_history">Yes</label>
+                </div>
+                <div class="mb-3" id="biologicsContainer" style="display: none;">
+                    <label class="form-label" for="biologics_list">Name/Type of Biologic</label>
+                    <div>
+                        <input type="text" id="biologics_list" class="form-control" placeholder="Type to search..." />
+                    </div>
+                    <div id="selected-biologics" class="mt-2"></div>
+                    <label class="form-label" for="biologics_response">Effect of biologic treatment on patient HS
+                        condition</label>
+                    <select class="form-control" id="biologics_response" name="biologics_response">
+                        <option value="" disabled selected>Select Option</option>
+                        <option value="improve">Improve</option>
+                        <option value="no_change">No Change</option>
+                        <option value="worsen">Worsening</option>
+                    </select>
+                    <input type="text" class="form-control" id="suggestionBox" name="suggestionBox"
+                        placeholder="Describe lesion changes if any...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Any surgeries/procedures for HS lesions?</label>
+                <div class="form-check">
+                    <input type="checkbox" id="procedures_history_check" class="form-check-input">
+                    <label class="form-check-label" class="form-control" for="procedures_history_check">Yes</label>
+                </div>
+                <div class="mb-3" id="proceduresContainer" style="display: none;">
+                    <input type="text" id="procedures_history" class="form-control" placeholder="Explain..">
+                </div>
+            </div>
+
+
+
+
+
+            <!-- Text Box with Suggestions -->
+            <div class="form-group">
+                <label for="other_notes">Other Notes (Optional)</label>
+                <input type="text" class="form-control" id="other_notes" name="other_notes"
+                    placeholder="Type something...">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <div class="mt-4">
+            <h4>Submitted Data (JSON):</h4>
+            <pre id="jsonOutput"></pre>
+        </div>
+    </div>
+
+    <!-- jQuery, Bootstrap JS, and jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
+    <!-- hidden questions -->
+    <script>
+        const smokingHistoryCheckbox = document.getElementById('smoking_history');
+        const packHistoryContainer = document.getElementById('packHistoryContainer');
+        const biologicCheckbox = document.getElementById('biologics_history');
+        const biologicsContainer = document.getElementById('biologicsContainer');
+        const proceduresCheckbox = document.getElementById('procedures_history_check');
+        const proceduresContainer = document.getElementById('proceduresContainer');
+
+        smokingHistoryCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                packHistoryContainer.style.display = 'block'; // Show pack history input if checkbox is checked
+            } else {
+                packHistoryContainer.style.display = 'none'; // Hide it if unchecked
+            }
+        });
+
+
+        biologicCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                biologicsContainer.style.display = 'block'; // Show pack history input if checkbox is checked
+            } else {
+                biologicsContainer.style.display = 'none'; // Hide it if unchecked
+            }
+        });
+
+        proceduresCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                proceduresContainer.style.display = 'block'; // Show pack history input if checkbox is checked
+            } else {
+                proceduresContainer.style.display = 'none'; // Hide it if unchecked
+            }
+        });
+    </script>
+
+    <script>
+        // Auto-suggestions for the text box
+        const form = document.getElementById('dataForm');
+
+        // don't auto submit with enter keypress
+        form.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+
+
+        // Handle form submission and convert data to JSON
+        $("#dataForm").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var userInput = prompt("Please enter the MRN to confirm:");
+            var mrnValue = $("#mrn").val();
+            if (userInput !== null) { // Check if the user didn't cancel the prompt
+                if (userInput.trim() === mrnValue) {
+                    // If numbers match, you can proceed to submit the form or do whatever is needed
+                    alert("Numbers match. Submitting the form...");
+                    // Collect form data
+                    var formData = {
+                        disease_state: $("#disease_state").val(),
+                        enrollment_number: $("#enrollment_number").val(),
+                        first_name: $("#first_name").val(),
+                        last_name: $("#last_name").val(),
+                        MRN: $("#mrn").val(),
+                        dob: $("#dob").val(),
+                        race: $("#race").val(),
+                        sex: $("#sex").val(),
+                        bmi: $("#bmi").val(),
+                        hurley: $("#hurley").val(),
+                        axillae: $("#axillae").val(),
+                        groin: $("#groin").val(),
+                        buttocks: $("#buttocks").val(),
+                        inframammary: $("#inframammary").val(),
+                        perianal: $("#perianal").val(),
+                        genital: $("#genital").val(),
+                        inner_thigh: $("#inner_thigh").val(),
+                        other: $("#other").val(),
+                        smoking_history: $("#smoking_history").is(":checked"),
+                        pack_history: $("#packHistory").val(),
+                        comorbidities: comorbiditiesList, // Assuming this will hold selected comorbidities
+                        current_hs_meds: currentMedsList, // Assuming this will hold selected current meds
+                        disc_hs_meds: discontinuedMedsList, // Assuming this will hold selected discontinued meds
+                        biologics_history: $("#biologics_history").is(":checked"),
+                        biologics_list: biologicsList,
+                        biologics_response: $("#biologics_response").val(),
+                        procedures_history_check: $("#procedures_history_check").is(":checked"),
+                        procedures_history: $("#procedures_history").val(),
+                        other_notes: $("#other_notes").val(),
+                        suggestionBox: $("#suggestionBox").val()
+                    };
+
+                    // Convert form data to JSON
+                    var jsonData = JSON.stringify(formData, null, 4);
+
+                    var blob = new Blob([jsonData], { type: 'application/json' });
+                    var url = URL.createObjectURL(blob);
+
+                    // Create a link element to trigger the download
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${mrnValue}.json`; // Set the file name to MRN value
+                    document.body.appendChild(a); // Append to the body
+                    a.click(); // Trigger the download
+                    document.body.removeChild(a); // Remove the link
+
+
+                    /* issue with encryption is that secret key can only be obfuscated since
+                    all the code exists locally. probably not worth the hassle of having people
+                    use aes to decrypt vs the security benefit.
+                    // Display JSON in the output div
+                    $("#jsonOutput").text(jsonData);
+
+                    var secretKey = "your-secret-key"; // Replace with your secret key
+                    var encryptedData = CryptoJS.AES.encrypt(jsonData, secretKey).toString();
+                    */
+                }
+                else {
+                    alert("The number you entered does not match the MRN field.");
+                }
+            }
+            else {
+                alert("You did not enter anything.");
+            }
+        });
+    </script>
+
+    <script>
+        var discontinuedMedsList = [];
+        var currentMedsList = [];
+        var biologicsList = [];
+        var comorbiditiesList = [];
+        const hsMedications = [
+            "Clindamycin",
+            "Doxycycline",
+            "Contraceptives",
+            "Spironolactone",
+            "Acitretin",
+            "Adalimumab",
+            "Infliximab",
+            "Methotrexate",
+            "Cyclosporine",
+            "Ibuprofen",
+            "Prednisone",
+            "Acetaminophen"
+        ];
+        const comorbidities = [
+            "Diabetes",
+            "Obesity",
+            "Hypertension",
+            "Crohn's Disease",
+            "Psoriasis",
+            "Arthritis",
+            "Asthma",
+            "Heart Disease",
+            "None"
+        ];
+        const biologics = [
+            "Diabetes",
+            "Obesity",
+            "Hypertension",
+            "Crohn's Disease",
+            "Psoriasis",
+            "Arthritis",
+            "Asthma",
+            "Heart Disease",
+            "None"
+        ];
+
+        const hsBiologics = [
+            "Adalimumab (Humira)",
+            "Infliximab (Remicade)",
+            "Secukinumab (Cosentyx)",
+            "Ustekinumab (Stelara)",
+            "Etanercept (Enbrel)",
+            "Tildrakizumab (Ilumya)",
+            "Guselkumab (Tremfya)",
+            "Brodalumab (Siliq)"
+        ];
+
+        $(function () {
+
+
+            $("#comorbidities").autocomplete({
+                source: comorbidities,
+                minLength: 1,
+                select: function (event, ui) {
+                    var selected = ui.item.value;
+                    addComorbidity(selected);
+                    this.value = ''; // Clear the input field
+                    return false;
+                }
+            });
+
+            $("#comorbidities").on("keypress", function (e) {
+                if (e.which === 13) { // Enter key
+                    var customTag = this.value.trim();
+                    if (customTag && !comorbidities.includes(customTag)) {
+                        addComorbidity(customTag);
+                        this.value = ''; // Clear the input field
+                    }
+                    e.preventDefault(); // Prevent form submission
+                }
+            });
+
+            function addComorbidity(comorbidity) {
+                var currentComorbidities = $('#selected-comorbidities').text();
+                if (!currentComorbidities.includes(comorbidity)) {
+                    $('#selected-comorbidities').append('<span class="badge bg-secondary me-1">' + comorbidity + '</span>');
+                    comorbiditiesList.push(comorbidity);
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(function () {
+
+            $("#current_hs_meds").autocomplete({
+                source: hsMedications,
+                minLength: 1,
+                select: function (event, ui) {
+                    var selected = ui.item.value;
+                    addCurrMed(selected);
+                    this.value = ''; // Clear the input field
+                    return false;
+                }
+            });
+
+            $("#current_hs_meds").on("keypress", function (e) {
+                if (e.which === 13) { // Enter key
+                    var customTag = this.value.trim();
+                    if (customTag && !hsMedications.includes(customTag)) {
+                        addCurrMed(customTag);
+                        this.value = ''; // Clear the input field
+                    }
+                    e.preventDefault(); // Prevent form submission
+                }
+            });
+
+            function addCurrMed(med) {
+                var CurrMed = $('#selected-curr-hs-meds').text();
+                if (!CurrMed.includes(med)) {
+                    $('#selected-curr-hs-meds').append('<span class="badge bg-secondary me-1">' + med + '</span>');
+                    currentMedsList.push(med);
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $("#disc_hs_meds").autocomplete({
+                source: hsMedications,
+                minLength: 1,
+                select: function (event, ui) {
+                    var selected = ui.item.value;
+                    addDiscMed(selected);
+                    this.value = ''; // Clear the input field
+                    return false;
+                }
+            });
+
+            $("#disc_hs_meds").on("keypress", function (e) {
+                if (e.which === 13) { // Enter key
+                    var customTag = this.value.trim();
+                    if (customTag && !hsMedications.includes(customTag)) {
+                        addDiscMed(customTag);
+                        this.value = ''; // Clear the input field
+                    }
+                    e.preventDefault(); // Prevent form submission
+                }
+            });
+
+            function addDiscMed(med) {
+                var CurrMed = $('#selected-disc-hs-meds').text();
+                if (!CurrMed.includes(med)) {
+                    $('#selected-disc-hs-meds').append('<span class="badge bg-secondary me-1">' + med + '</span>');
+                    discontinuedMedsList.push(med);
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $("#biologics_list").autocomplete({
+                source: hsMedications,
+                minLength: 1,
+                select: function (event, ui) {
+                    var selected = ui.item.value;
+                    addBiologic(selected);
+                    this.value = ''; // Clear the input field
+                    return false;
+                }
+            });
+
+            $("#biologics_list").on("keypress", function (e) {
+                if (e.which === 13) { // Enter key
+                    var customTag = this.value.trim();
+                    if (customTag && !hsMedications.includes(customTag)) {
+                        addBiologic(customTag);
+                        this.value = ''; // Clear the input field
+                    }
+                    e.preventDefault(); // Prevent form submission
+                }
+            });
+
+            function addBiologic(med) {
+                var CurrMed = $('#selected-biologics').text();
+                if (!CurrMed.includes(med)) {
+                    $('#selected-biologics').append('<span class="badge bg-secondary me-1">' + med + '</span>');
+                    biologicsList.push(med);
+                }
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>
