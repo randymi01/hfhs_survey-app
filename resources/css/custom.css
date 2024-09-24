@@ -38,3 +38,10 @@ label {
     display: block;
     /* Ensure the image is displayed as a block element */
 }
+
+.col-1-5 {
+    flex: 0 0 12.5%;
+    /* 1.5/12 = 12.5% */
+    max-width: 12.5%;
+    /* Set the max width to 12.5% */
+}

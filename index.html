@@ -19,25 +19,112 @@
         <h2>HS Patient Demographic Survey</h2>
         <form id="dataForm">
             <!-- Text Box -->
-            <div class="form-group">
-                <label for="disease_state">Enrollment Number</label>
-                <div class="row">
-                    <!-- Disease select (10% width) -->
-                    <div class="col-2">
-                        <select class="form-control" id="disease_state" name="disease_state" required>
-                            <option value="HS">HS</option>
-                            <option value="HC">HC</option>
-                        </select>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label for="disease_state">Enrollment Number</label>
+                    <div class="row">
+                        <!-- Disease select (10% width) -->
+                        <div class="col-5">
+                            <select class="form-control" id="disease_state" name="disease_state" required>
+                                <option value="HS">HS</option>
+                                <option value="HC">HC</option>
+                            </select>
+                        </div>
+                        <p>-</p>
+                        <!-- Other input (20% width) -->
+                        <div class="col-5">
+                            <input type="number" class="form-control" name="enrollment_number" id="enrollment_number"
+                                min="1" max="999" required>
+                        </div>
                     </div>
-                    <p>-</p>
-                    <!-- Other input (20% width) -->
-                    <div class="col-2">
-                        <input type="number" class="form-control" name="enrollment_number" id="enrollment_number"
-                            min="1" max="999" required>
+                </div>
+
+                <div class="form-group col-8 ml-auto">
+                    <div class="row justify-content-end">
+                        <div class="col-5">
+                            <label for="collection_site" class="d-block" style="text-align: right">Collection
+                                Site</label>
+                            <select class="form-control" id="collection_site" name="collection_site" required>
+                                <option value="" disabled selected>Enter Site</option>
+                                <option value="hamzavi_clinic">Hamzavi Clinic</option>
+                                <option value="new_center_one">New Center One</option>
+                                <option value="wayne">WSU</option>
+                            </select>
+                        </div>
+
+                        <div class="col-5">
+                            <label for="sample_type" class="d-block" style="text-align: right">Sample Type</label>
+                            <select type="number" class="form-control" name="sample_type" id="sample_type" required>
+                                <option value="" disabled selected>Enter Sample Type</option>
+                                <option value="Blood">Blood</option>
+                                <option value="Saliva">Saliva</option>
+                                <option value="Tissue">Tissue</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row justify-content-end ml-auto" id="blood_tubes" style="display:none">
+                <div class="col-2 d-flex align-items-center justify-content-end" id="green_tube_container">
+                    <label for="green_tube" class="mr-2" style="text-align: right">G</label>
+                    <select type="number" class="form-control" name="green_tube" id="green_tube" required>
+                        <option value="1">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+
+                <div class="col-2 d-flex align-items-center justify-content-end" id="red_tube_container">
+                    <label for="red_tube" class="mr-2" style="text-align: right">R</label>
+                    <select type="number" class="form-control" name="red_tube" id="red_tube" required>
+                        <option value="1">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="col-2 d-flex align-items-center justify-content-end" id="purple_tube_container">
+                    <label for="purple_tube" class="mr-2" style="text-align: right">P</label>
+                    <select type="number" class="form-control" name="purple_tube" id="purple_tube" required>
+                        <option value="1">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="first_name">Collector Name</label>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="text" class="form-control" name="col_first_name" id="col_first_name"
+                            placeholder="First Name" required>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" class="form-control" name="col_last_name" id="col_last_name"
+                            placeholder="Last Name" required>
                     </div>
                 </div>
             </div>
 
+
+            <hr style="border: none; border-top: 1px solid black; margin: 20px 0">
             <!-- Text Box -->
             <div class="form-group">
                 <label for="first_name">Patient Name</label>
@@ -74,6 +161,8 @@
                     <option value="native_american">Native American</option>
                     <option value="other">Other</option>
                 </select>
+                <input type="text" class="form-control" id="race-other" name="race-other" style="display: none;"
+                    placeholder="Enter Race">
             </div>
             <div class="form-group">
                 <label for="sex">Sex</label>
@@ -164,15 +253,46 @@
             </div>
 
             <div class="form-group">
-                <label for="smoking_history" class="form-label">Does the patient have a smoking history?</label>
-                <div class="form-check">
-                    <input type="checkbox" id="smoking_history" class="form-check-input">
-                    <label class="form-check-label" for="smoking_history">Yes</label>
+                <label for="smoking_history_yes" class="form-label">Does the patient have a smoking history?</label>
+                <div>
+                    <input type="radio" id="smoking_history_yes" name="smoking_history" value="yes"
+                        class="form-radio-input">
+                    <label class="form-check-label" for="smoking_history_yes">Yes</label>
+                </div>
+                <div>
+                    <input type="radio" id="smoking_history_no" name="smoking_history" value="no"
+                        class="form-radio-input">
+                    <label class="form-check-label" for="smoking_history_no">No</label>
+                </div>
+                <div>
+                    <input type="radio" id="smoking_history_unknown" name="smoking_history" value="unknown"
+                        class="form-radio-input">
+                    <label class="form-check-label" for="smoking_history_unknown">Unknown</label>
                 </div>
                 <div class="mb-3" id="packHistoryContainer" style="display: none;">
                     <label for="packHistory" class="form-label">Pack History:</label>
                     <input type="number" id="packHistory" name="pack_history" class="form-control"
                         placeholder="Packs per Day" min="0">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="rec_drugs_history_yes" class="form-label">Does the patient have use recreational
+                    drugs?</label>
+                <div>
+                    <input type="radio" id="rec_drugs_history_yes" name="rec_drugs_history" value="yes"
+                        class="form-radio-input">
+                    <label class="form-check-label" for="rec_drugs_history_yes">Yes</label>
+                </div>
+                <div>
+                    <input type="radio" id="rec_drugs_history_no" name="rec_drugs_history" value="no"
+                        class="form-radio-input">
+                    <label class="form-check-label" for="rec_drugs_history_no">No</label>
+                </div>
+                <div>
+                    <input type="radio" id="rec_drugs_history_unkown" name="rec_drugs_history" value="unknown"
+                        class="form-radio-input">
+                    <label class="form-check-label" for="rec_drugs_history_unkown">Unknown</label>
                 </div>
             </div>
 
@@ -403,7 +523,7 @@
 
     <!-- hidden questions -->
     <script>
-        const smokingHistoryCheckbox = document.getElementById('smoking_history');
+        const smokingHistoryCheckbox = document.getElementById('smoking_history_yes');
         const packHistoryContainer = document.getElementById('packHistoryContainer');
         const biologicCheckbox = document.getElementById('biologics_history');
         const biologicsContainer = document.getElementById('biologicsContainer');
@@ -411,10 +531,16 @@
         const proceduresContainer = document.getElementById('proceduresContainer');
         const familyContainer = document.getElementById('familyContainer');
         const familyCheckbox = document.getElementById('family_history');
+        const raceBox = document.getElementById('race');
+        const raceContainer = document.getElementById('race-other');
         const sexBox = document.getElementById('sex');
         const canvas = document.getElementById('body_map');
         const ctx = canvas.getContext("2d");
         const lesionTable = document.getElementById('lesion_table');
+        const smoking_radios = document.querySelectorAll('input[name="smoking_history"]');
+        const drug_radios = document.querySelectorAll('input[name="rec_drugs_history"]');
+        const sampletypeBox = document.getElementById("sample_type");
+        const bloodContainer = document.getElementById("blood_tubes");
         var bodyImage = "";
         var lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
         const male_polygons = {
@@ -453,12 +579,15 @@
         var response = "";
         var polygon_dict = {}
 
-        smokingHistoryCheckbox.addEventListener('change', function () {
-            if (this.checked) {
-                packHistoryContainer.style.display = 'block'; // Show pack history input if checkbox is checked
-            } else {
-                packHistoryContainer.style.display = 'none'; // Hide it if unchecked
-            }
+        smoking_radios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.value === 'yes') {
+                    packHistoryContainer.style.display = 'block'; // Show pack history input if "Yes" is selected
+                } else {
+                    packHistoryContainer.style.display = 'none'; // Hide it if "No" or "Unknown" is selected
+                    $("#packHistory").val("");
+                }
+            });
         });
 
         familyCheckbox.addEventListener('change', function () {
@@ -467,6 +596,26 @@
             }
             else {
                 familyContainer.style.display = 'none';
+            }
+        });
+
+        raceBox.addEventListener('change', function () {
+            if (this.value == "other") {
+                raceContainer.style.display = 'block';
+                raceContainer.required = true;
+            }
+            else {
+                raceContainer.style.display = 'none';
+                raceContainer.required = false;
+            }
+        });
+
+        sampletypeBox.addEventListener('change', function () {
+            if (this.value == "Blood") {
+                bloodContainer.style.display = 'flex';
+            }
+            else {
+                bloodContainer.style.display = 'none';
             }
         });
 
@@ -515,7 +664,7 @@
         sexBox.addEventListener('change', function () {
             console.log("changed sex");
             var tableHeight = lesionTable.offsetHeight;
-            if (this.value.trim().toLowerCase() == "male") {
+            if (this.value.trim().toLowerCase() == "male" || this.value.trim().toLowerCase() == "other") {
                 console.log("male");
                 gender = "male";
                 drawImage(gender);
@@ -685,6 +834,22 @@
             }
         });
 
+        function get_age(dob, date) {
+            const dob_y = dob.getFullYear();
+            const dob_m = dob.getMonth();
+            const dob_d = dob.getDate();
+
+            const d_y = date.getFullYear();
+            const d_m = date.getMonth();
+            const d_d = date.getDate();
+
+            let age = d_y - dob_y
+            if (d_m > dob_m || (d_m == dob_m && d_d >= dob_d)) {
+                age += 1;
+            }
+
+            return age;
+        }
 
         // Handle form submission and convert data to JSON
         $("#dataForm").submit(function (event) {
@@ -711,16 +876,50 @@
                     // If numbers match, you can proceed to submit the form or do whatever is needed
                     alert("Numbers match. Submitting the form...");
                     // Collect form data
+                    let race_val = $("#race").val();
+                    if (race_val == "other") {
+                        race_val = $("#race-other").val();
+                    }
+
+                    let smokingValue;
+                    for (const radio of smoking_radios) {
+                        if (radio.checked) {
+                            smokingValue = radio.value;
+                            break;
+                        }
+                    }
+
+                    let recdrugsValue;
+
+                    for (const radio of drug_radios) {
+                        if (radio.checked) {
+                            recdrugsValue = radio.value;
+                            break;
+                        }
+                    }
+
+
+                    let today = new Date();
+
                     var formData = {
+                        date: today,
                         disease_state: $("#disease_state").val(),
                         enrollment_number: $("#enrollment_number").val(),
+                        collection_site: $("#collection_site").val(),
+                        sample_type: $("#sample_type").val(),
+                        blood_g: $("#green_tube").val(),
+                        blood_r: $("#red_tube").val(),
+                        bllod_p: $("#purple_tube").val(),
+                        collector_name: $("#col_first_name").val() + ' ' + $("#col_last_name").val(),
                         first_name: $("#first_name").val(),
                         last_name: $("#last_name").val(),
                         MRN: $("#mrn").val(),
                         dob: $("#dob").val(),
-                        race: $("#race").val(),
+                        age: get_age(new Date($("#dob").val()), today),
+                        race: race_val,
                         sex: $("#sex").val(),
                         bmi: $("#bmi").val(),
+                        obesity: $("#bmi").val() > 30,
                         hurley: $("#hurley").val(),
                         axillae: $("#axillae").val(),
                         groin: $("#groin").val(),
@@ -732,9 +931,9 @@
                         other: $("#other").val(),
                         family_history: $("#family_history").is(":checked"),
                         family_contact: family_history_list,
-                        smoking_history: $("#smoking_history").is(":checked"),
+                        smoking_history: smokingValue,
                         pack_history: $("#packHistory").val(),
-
+                        recdrugs_usage: recdrugsValue,
                         comorbidities: comorbiditiesList, // Assuming this will hold selected comorbidities
                         current_hs_meds: currentMedsList, // Assuming this will hold selected current meds
                         disc_hs_meds: discontinuedMedsList, // Assuming this will hold selected discontinued meds
