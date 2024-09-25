@@ -4,6 +4,9 @@
 [TO DO] Create PWA for andriod
 [TO DO] talk with jesse about where the lesion regions are
 [TO DO] change lesion mapping groin to some other color since points are red
+[TO DO] Make another mask for the human body so that you can't select points outside of the person
+[TO DO] Lesion undo button
+[DONE] Disable selecting stuff until you select a body
 [Done] Change lesion counter to human map
 [DONE] Send out zip
 [DONE] add family relation

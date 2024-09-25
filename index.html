@@ -245,11 +245,13 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-5">
-                        <canvas id="body_map" style="display: hidden"> </canvas>
+                    <div class="col-5" style="position: relative;">
+                        <canvas id="body_map" style="display: hidden; position: absolute; top: 0; left: 0;"> </canvas>
+                        <canvas id="lesion_map" style="display: hidden; position: absolute; top: 0; left: 0;"> </canvas>
                     </div>
                 </div>
-                <button id="clear_body_map" type="button" class="btn btn-dark">Clear Lesion Counts</button>
+                <button id="clear_body_map" type="button" class="btn btn-danger">Clear Lesion Counts</button>
+                <button id="clear_last_lesion" type="button" class="btn btn-secondary">Undo</button>
             </div>
 
             <div class="form-group">
@@ -277,7 +279,7 @@
             </div>
 
             <div class="form-group">
-                <label for="rec_drugs_history_yes" class="form-label">Does the patient have use recreational
+                <label for="rec_drugs_history_yes" class="form-label">Does the patient use recreational
                     drugs?</label>
                 <div>
                     <input type="radio" id="rec_drugs_history_yes" name="rec_drugs_history" value="yes"
@@ -296,51 +298,6 @@
                 </div>
             </div>
 
-            <!-- Checkbox morbidities
-            <div class="form-group">
-                <label class="form-label" style="font-weight: bold">Comorbidities:</label>
-                <div class="mb-3 no-bold">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="diabetes" name="comorbidities"
-                            value="diabetes">
-                        <label class="form-check-label" for="diabetes">Diabetes</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="obesity" name="comorbidities"
-                            value="obesity">
-                        <label class="form-check-label" for="obesity">Obesity</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="hypertension" name="comorbidities"
-                            value="hypertension">
-                        <label class="form-check-label" for="hypertension">Hypertension</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="crohns" name="comorbidities" value="crohns">
-                        <label class="form-check-label" for="crohns">Crohn's Disease</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="psoriasis" name="comorbidities"
-                            value="psoriasis">
-                        <label class="form-check-label" for="psoriasis">Psoriasis</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="arthritis" name="comorbidities"
-                            value="arthritis">
-                        <label class="form-check-label" for="arthritis">Arthritis</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="otherCheckbox" name="comorbidities"
-                            value="other">
-                        <label class="form-check-label" for="otherCheckbox">Other</label>
-                    </div>
-                    <div class="mb-3" id="otherInputContainer" style="display: none;">
-                        <input type="text" id="otherInput" class="form-control mt-2"
-                            placeholder="Please specify (seperate conditions with ',')" name="other" />
-                    </div>
-                </div>
-            </div>
-        -->
             <div class="form-group">
                 <label class="form-label" for="comorbidities">Select Comorbidities (tap to remove)</label>
                 <div class="suggestions-container">
@@ -536,45 +493,17 @@
         const sexBox = document.getElementById('sex');
         const canvas = document.getElementById('body_map');
         const ctx = canvas.getContext("2d");
+
+        const lesion_canvas = document.getElementById('lesion_map');
+        const ltx = lesion_canvas.getContext("2d");
         const lesionTable = document.getElementById('lesion_table');
         const smoking_radios = document.querySelectorAll('input[name="smoking_history"]');
         const drug_radios = document.querySelectorAll('input[name="rec_drugs_history"]');
         const sampletypeBox = document.getElementById("sample_type");
         const bloodContainer = document.getElementById("blood_tubes");
+        const lesion_undo = document.getElementById("clear_last_lesion");
         var bodyImage = "";
         var lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
-        const male_polygons = {
-            "Axillae1": [[100, 130], [118, 203], [83, 204]],
-            "Axillae2": [[214, 132], [198, 198], [232, 201]],
-            "Groin": [[131, 249], [189, 249], [168, 278], [146, 278]],
-            "Buttocks": [[406, 237], [458, 250], [509, 238], [518, 284], [459, 287], [401, 275]],
-            "Inframammary": [[105, 153], [209, 153], [201, 176], [111, 175]],
-            "Perianal": [[452, 239], [469, 240], [466, 248], [454, 249]],
-            "Genital": [[146, 279], [170, 280], [167, 294], [147, 293]],
-            "InnerThigh1": [[147, 297], [154, 297], [143, 391], [130, 389]],
-            "InnerThigh2": [[158, 297], [169, 297], [178, 395], [170, 395]],
-            "InnerThigh3": [[447, 289], [458, 291], [447, 380], [435, 375]],
-            "InnerThigh4": [[461, 291], [471, 382], [488, 381], [473, 289]],
-            "Axillae3": [[400, 140], [421, 198], [385, 202]],
-            "Axillae4": [[517, 138], [500, 202], [536, 204]]
-        }
-
-        const female_polygons = {
-            "Axillae1": [[119, 131], [134, 135], [133, 208], [112, 204]],
-            "Axillae2": [[212, 133], [225, 127], [234, 213], [214, 212]],
-            "Axillae3": [[427, 131], [439, 132], [443, 204], [422, 204]],
-            "Axillae4": [[521, 135], [534, 133], [538, 210], [519, 208]],
-            "Groin": [[149, 251], [201, 251], [195, 273], [161, 273]],
-            "Buttocks": [[426, 244], [480, 261], [536, 249], [543, 295], [494, 302], [480, 289], [469, 302], [416, 283]],
-            "Perianal": [[472, 248], [490, 249], [487, 259], [474, 259]],
-            "Genital": [[161, 276], [194, 275], [193, 293], [163, 292]],
-            "InnerThigh1": [[159, 298], [145, 427], [167, 426], [175, 300]],
-            "InnerThigh2": [[178, 300], [194, 298], [200, 437], [182, 430]],
-            "InnerThigh3": [[461, 304], [474, 305], [465, 419], [456, 417]],
-            "InnerThigh4": [[487, 307], [501, 305], [504, 421], [494, 421]],
-            "Inframammary": [[134, 169], [174, 155], [212, 172], [212, 184], [134, 181]]
-
-        }
         var gender = "";
         var response = "";
         var polygon_dict = {}
@@ -598,6 +527,7 @@
                 familyContainer.style.display = 'none';
             }
         });
+
 
         raceBox.addEventListener('change', function () {
             if (this.value == "other") {
@@ -637,26 +567,20 @@
         });
 
         function drawImage(gender_) {
+            bodyImage = new Image(600, 554);
+            canvas.height = lesion_canvas.height = bodyImage.height;
+            canvas.width = lesion_canvas.width = bodyImage.width;
+            bodyImage.onload = drawImageActualSize;
             if (gender_ == "male") {
-                bodyImage = new Image(600, 554);
-                canvas.height = bodyImage.height;
-                canvas.width = bodyImage.width;
-                bodyImage.onload = drawImageActualSize;
                 bodyImage.src = "./resources/img/male.png";
             }
             if (gender_ == "female") {
-                bodyImage = new Image(600, 554);
-                canvas.height = bodyImage.height;
-                canvas.width = bodyImage.width;
-                bodyImage.onload = drawImageActualSize;
                 bodyImage.src = "./resources/img/female.png";
             }
 
         }
 
         function drawImageActualSize() {
-            //canvas.width = this.naturalWidth;
-            //canvas.height = this.naturalHeight;
             ctx.drawImage(this, 0, 0, this.width, this.height);
             drawPolygons();
         }
@@ -788,31 +712,51 @@
         }
 
         function clearCounts() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawImage(gender);
-            drawPolygons();
+            ltx.clearRect(0, 0, lesion_canvas.width, lesion_canvas.height);
             lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
             updateCounters();
 
         }
 
-        // Handle canvas click event
-        canvas.addEventListener("click", function (event) {
-            const rect = canvas.getBoundingClientRect();
+
+        // javascript consts are not immutable, you just can't assign them to something else
+        const lesion_points = []
+        // Draw lesion point
+        lesion_canvas.addEventListener("click", function (event) {
+            rect = lesion_canvas.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
 
-            console.log(x, y);
+            lesion_points.push([x, y]);
 
-            // Mark the clicked point on the canvas
-            ctx.beginPath();
-            ctx.arc(x, y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = "red";
-            ctx.fill();
+            if ($("#sex").val()) {
+                // Mark the clicked point on the canvas
+                ltx.beginPath();
+                ltx.arc(x, y, 2, 0, Math.PI * 2);
+                ltx.fillStyle = "#4d0202";
+                ltx.fill();
+            }
 
             // Check which body part was clicked
             checkBodyPart(x, y);
         });
+
+        function redraw_lesion_points() {
+            ltx.clearRect(0, 0, lesion_canvas.width, lesion_canvas.height);
+            for (const lesion of lesion_points) {
+                ltx.beginPath();
+                ltx.arc(lesion[0], lesion[1], 2, 0, Math.PI * 2);
+                ltx.fillStyle = "#4d0202";
+                ltx.fill();
+            }
+        }
+
+        function undo_lesion_point() {
+            if (lesion_points.length > 0) {
+                lesion_points.pop();
+                redraw_lesion_points();
+            }
+        }
 
         document.getElementById('clear_body_map').addEventListener('click', function () {
             // Clear the body map or perform other actions
@@ -821,16 +765,26 @@
             clearCounts();
         });
 
+        lesion_undo.addEventListener('click', undo_lesion_point);
+
     </script>
 
     <script>
-        // Auto-suggestions for the text box
         const form = document.getElementById('dataForm');
 
         // don't auto submit with enter keypress
-        form.addEventListener('keypress', function (event) {
+        document.addEventListener('keypress', function (event) {
             if (event.key === 'Enter') {
+                console.log("enter");
                 event.preventDefault(); // Prevent form submission
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 'z') {
+                console.log("undo");
+                event.preventDefault(); // Prevent default undo action
+                undo_lesion_point(); // Call the undo function
             }
         });
 
@@ -987,9 +941,9 @@
         var biologicsList = [];
         var comorbiditiesList = [];
 
+        // wrap in an anonymous function so it only runs after DOM is loaded
         $(function () {
-
-
+            // comorbidities autocomplete
             $("#comorbidities").autocomplete({
                 source: comorbidities,
                 minLength: 1,
@@ -1028,12 +982,8 @@
                     comorbiditiesList.splice(index, 1); // Remove comorbidity from the list
                 }
             });
-        });
-    </script>
 
-    <script>
-        $(function () {
-
+            // current meds autocomplete
             $("#current_hs_meds").autocomplete({
                 source: hsMedications,
                 minLength: 1,
@@ -1072,11 +1022,8 @@
                     currentMedsList.splice(index, 1);
                 }
             });
-        });
-    </script>
 
-    <script>
-        $(function () {
+            // discontinued meds autocomplete
             $("#disc_hs_meds").autocomplete({
                 source: hsMedications,
                 minLength: 1,
@@ -1115,11 +1062,8 @@
                     discontinuedMedsList.splice(index, 1);
                 }
             });
-        });
-    </script>
 
-    <script>
-        $(function () {
+            // biologics list autocomplete
             $("#biologics_list").autocomplete({
                 source: hsBiologics,
                 minLength: 1,
