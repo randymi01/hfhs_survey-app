@@ -706,15 +706,17 @@
             document.getElementById("other").value = lesioncountsdict["other"];
         }
 
+        const lesion_body_parts = [];
         // Check which body part is clicked based on coordinates
         function checkBodyPart(x, y) {
+            let output_key;
             const point = [x, y];
             var validpoint = false;
             if (gender == "male") {
                 for (const key in male_polygons) {
                     if (isPointInPolygon(point, male_polygons[key])) {
                         var key_str = key.replace(/[0-9]/g, '').toLowerCase();
-                        lesioncountsdict[key_str] += 1;
+                        output_key = key_str;
                         validpoint = true;
                         break;
                     }
@@ -724,15 +726,17 @@
                 for (const key in female_polygons) {
                     if (isPointInPolygon(point, female_polygons[key])) {
                         var key_str = key.replace(/[0-9]/g, '').toLowerCase();
-                        lesioncountsdict[key_str] += 1;
+                        output_key = key_str;
                         validpoint = true;
                         break;
                     }
                 }
             }
             if (!validpoint) {
-                lesioncountsdict["other"] += 1;
+                output_key = "other";
             }
+            lesion_body_parts.push(output_key);
+            lesioncountsdict[output_key] += 1;
             updateCounters();
         }
 
@@ -751,6 +755,20 @@
             rect = lesion_canvas.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
+            let body_region;
+
+            if (gender == "male") {
+                body_region = male_region;
+            }
+            else {
+                body_region = female_region;
+            }
+
+            // two bodies per img
+            if (!isPointInPolygon([x, y], body_region[0]) && !isPointInPolygon([x, y], body_region[1])) {
+                console.log("point not on body");
+                return;
+            }
 
             lesion_points.push([x, y]);
 
@@ -780,6 +798,10 @@
             if (lesion_points.length > 0) {
                 lesion_points.pop();
                 redraw_lesion_points();
+                last_part = lesion_body_parts.pop();
+                lesioncountsdict[last_part] -= 1;
+                updateCounters();
+
             }
         }
 
