@@ -67,8 +67,8 @@
             <div class="form-group row justify-content-end ml-auto" id="blood_tubes" style="display:none">
                 <div class="col-2 d-flex align-items-center justify-content-end" id="green_tube_container">
                     <label for="green_tube" class="mr-2" style="text-align: right">G</label>
-                    <select type="number" class="form-control" name="green_tube" id="green_tube" required>
-                        <option value="1">0</option>
+                    <select type="number" class="form-control" name="green_tube" id="green_tube" value="0" required>
+                        <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -82,8 +82,8 @@
 
                 <div class="col-2 d-flex align-items-center justify-content-end" id="red_tube_container">
                     <label for="red_tube" class="mr-2" style="text-align: right">R</label>
-                    <select type="number" class="form-control" name="red_tube" id="red_tube" required>
-                        <option value="1">0</option>
+                    <select type="number" class="form-control" name="red_tube" id="red_tube" value="0" required>
+                        <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -96,8 +96,8 @@
                 </div>
                 <div class="col-2 d-flex align-items-center justify-content-end" id="purple_tube_container">
                     <label for="purple_tube" class="mr-2" style="text-align: right">P</label>
-                    <select type="number" class="form-control" name="purple_tube" id="purple_tube" required>
-                        <option value="1">0</option>
+                    <select type="number" class="form-control" name="purple_tube" id="purple_tube" value="0" required>
+                        <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -480,6 +480,10 @@
 
     <!-- hidden questions -->
     <script>
+
+        // DEBUG
+        const debug = true;
+
         const smokingHistoryCheckbox = document.getElementById('smoking_history_yes');
         const packHistoryContainer = document.getElementById('packHistoryContainer');
         const biologicCheckbox = document.getElementById('biologics_history');
@@ -502,11 +506,32 @@
         const sampletypeBox = document.getElementById("sample_type");
         const bloodContainer = document.getElementById("blood_tubes");
         const lesion_undo = document.getElementById("clear_last_lesion");
-        var bodyImage = "";
-        var lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
-        var gender = "";
-        var response = "";
-        var polygon_dict = {}
+        let bodyImage;
+        let lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
+        let gender;
+        let response;
+        let polygon_dict = {}
+
+        // get rid of required for everything if debug
+        if (debug) {
+            const formFields = document.querySelectorAll('#dataForm [required]');
+
+            // arrow func implicit return, function(field){field.removeAttribute();}
+            // array.forEach(callback_function_applied(currentValue, index, array), thisArg);
+            /*if (debug) {
+                const formFields = document.querySelectorAll('#dataForm [required]');
+                const context = { prefix: 'Field: ' };
+
+                formFields.forEach(function(field) {
+                    console.log(this.prefix + field.name);
+                    field.removeAttribute('required');
+                }, context);
+
+                submit_form();
+                return;
+            }*/
+            formFields.forEach(field => field.removeAttribute('required'));
+        }
 
         smoking_radios.forEach(radio => {
             radio.addEventListener('change', function () {
@@ -805,12 +830,32 @@
             return age;
         }
 
-        // Handle form submission and convert data to JSON
-        $("#dataForm").submit(function (event) {
-            event.preventDefault(); // Prevent the default form submission
+        function submit_form() {
+            let race_val = $("#race").val();
+            if (race_val == "other") {
+                race_val = $("#race-other").val();
+            }
 
+            let smokingValue;
+            for (const radio of smoking_radios) {
+                if (radio.checked) {
+                    smokingValue = radio.value;
+                    break;
+                }
+            }
+
+            let recdrugsValue;
+
+            for (const radio of drug_radios) {
+                if (radio.checked) {
+                    recdrugsValue = radio.value;
+                    break;
+                }
+            }
+
+            let family_history_list;
             if ($("#family_history").is(":checked")) {
-                var family_history_list = {
+                family_history_list = {
                     relation: $("familyRelation").val(),
                     email: $("familyEmail").val(),
                     address: $("familyAddress").val(),
@@ -820,110 +865,107 @@
                 };
             }
             else {
-                var family_history_list = {};
+                family_history_list = {};
+            }
+
+
+            let today = new Date();
+
+            var formData = {
+                date: today,
+                disease_state: $("#disease_state").val(),
+                enrollment_number: $("#enrollment_number").val(),
+                collection_site: $("#collection_site").val(),
+                sample_type: $("#sample_type").val(),
+                blood_g: $("#green_tube").val(),
+                blood_r: $("#red_tube").val(),
+                blood_p: $("#purple_tube").val(),
+                collector_name: $("#col_first_name").val() + ' ' + $("#col_last_name").val(),
+                first_name: $("#first_name").val(),
+                last_name: $("#last_name").val(),
+                MRN: $("#mrn").val(),
+                dob: $("#dob").val(),
+                age: get_age(new Date($("#dob").val()), today),
+                race: race_val,
+                sex: $("#sex").val(),
+                bmi: $("#bmi").val(),
+                obesity: $("#bmi").val() > 30,
+                hurley: $("#hurley").val(),
+                axillae: $("#axillae").val(),
+                groin: $("#groin").val(),
+                buttocks: $("#buttocks").val(),
+                inframammary: $("#inframammary").val(),
+                perianal: $("#perianal").val(),
+                genital: $("#genital").val(),
+                inner_thigh: $("#inner_thigh").val(),
+                other: $("#other").val(),
+                family_history: $("#family_history").is(":checked"),
+                family_contact: family_history_list,
+                smoking_history: smokingValue,
+                pack_history: $("#packHistory").val(),
+                recdrugs_usage: recdrugsValue,
+                comorbidities: comorbiditiesList, // Assuming this will hold selected comorbidities
+                current_hs_meds: currentMedsList, // Assuming this will hold selected current meds
+                disc_hs_meds: discontinuedMedsList, // Assuming this will hold selected discontinued meds
+                biologics_history: $("#biologics_history").is(":checked"),
+                biologics_list: biologicsList,
+                biologics_response: $("#biologics_response").val(),
+                procedures_history_check: $("#procedures_history_check").is(":checked"),
+                procedures_history: $("#procedures_history").val(),
+                other_notes: $("#other_notes").val(),
+                lesion_map_points: lesion_points,
+                suggestionBox: $("#suggestionBox").val()
+            };
+
+            // Convert form data to JSON
+            var jsonData = JSON.stringify(formData, null, 4);
+
+            var blob = new Blob([jsonData], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+
+            // Create a link element to trigger the download
+            var a = document.createElement('a');
+            a.href = url;
+            if (debug) {
+                a.download = `debug.json`;
+            }
+            else {
+                a.download = `${mrnValue}.json`;
+            } // Set the file name to MRN value
+            document.body.appendChild(a); // Append to the body
+            a.click(); // Trigger the download
+            document.body.removeChild(a); // Remove the link
+
+
+            /* issue with encryption is that secret key can only be obfuscated since
+            all the code exists locally. probably not worth the hassle of having people
+            use aes to decrypt vs the security benefit.
+            // Display JSON in the output div
+            $("#jsonOutput").text(jsonData);
+ 
+            var secretKey = "your-secret-key"; // Replace with your secret key
+            var encryptedData = CryptoJS.AES.encrypt(jsonData, secretKey).toString();
+            */
+        }
+
+        // Handle form submission and convert data to JSON
+        $("#dataForm").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            if (debug) {
+                submit_form();
+                return;
             }
 
             var userInput = prompt("Please enter the MRN to confirm:");
+
             var mrnValue = $("#mrn").val();
             if (userInput !== null) { // Check if the user didn't cancel the prompt
                 if (userInput.trim() === mrnValue) {
                     // If numbers match, you can proceed to submit the form or do whatever is needed
                     alert("Numbers match. Submitting the form...");
                     // Collect form data
-                    let race_val = $("#race").val();
-                    if (race_val == "other") {
-                        race_val = $("#race-other").val();
-                    }
-
-                    let smokingValue;
-                    for (const radio of smoking_radios) {
-                        if (radio.checked) {
-                            smokingValue = radio.value;
-                            break;
-                        }
-                    }
-
-                    let recdrugsValue;
-
-                    for (const radio of drug_radios) {
-                        if (radio.checked) {
-                            recdrugsValue = radio.value;
-                            break;
-                        }
-                    }
-
-
-                    let today = new Date();
-
-                    var formData = {
-                        date: today,
-                        disease_state: $("#disease_state").val(),
-                        enrollment_number: $("#enrollment_number").val(),
-                        collection_site: $("#collection_site").val(),
-                        sample_type: $("#sample_type").val(),
-                        blood_g: $("#green_tube").val(),
-                        blood_r: $("#red_tube").val(),
-                        bllod_p: $("#purple_tube").val(),
-                        collector_name: $("#col_first_name").val() + ' ' + $("#col_last_name").val(),
-                        first_name: $("#first_name").val(),
-                        last_name: $("#last_name").val(),
-                        MRN: $("#mrn").val(),
-                        dob: $("#dob").val(),
-                        age: get_age(new Date($("#dob").val()), today),
-                        race: race_val,
-                        sex: $("#sex").val(),
-                        bmi: $("#bmi").val(),
-                        obesity: $("#bmi").val() > 30,
-                        hurley: $("#hurley").val(),
-                        axillae: $("#axillae").val(),
-                        groin: $("#groin").val(),
-                        buttocks: $("#buttocks").val(),
-                        inframammary: $("#inframammary").val(),
-                        perianal: $("#perianal").val(),
-                        genital: $("#genital").val(),
-                        inner_thigh: $("#inner_thigh").val(),
-                        other: $("#other").val(),
-                        family_history: $("#family_history").is(":checked"),
-                        family_contact: family_history_list,
-                        smoking_history: smokingValue,
-                        pack_history: $("#packHistory").val(),
-                        recdrugs_usage: recdrugsValue,
-                        comorbidities: comorbiditiesList, // Assuming this will hold selected comorbidities
-                        current_hs_meds: currentMedsList, // Assuming this will hold selected current meds
-                        disc_hs_meds: discontinuedMedsList, // Assuming this will hold selected discontinued meds
-                        biologics_history: $("#biologics_history").is(":checked"),
-                        biologics_list: biologicsList,
-                        biologics_response: $("#biologics_response").val(),
-                        procedures_history_check: $("#procedures_history_check").is(":checked"),
-                        procedures_history: $("#procedures_history").val(),
-                        other_notes: $("#other_notes").val(),
-                        suggestionBox: $("#suggestionBox").val()
-                    };
-
-                    // Convert form data to JSON
-                    var jsonData = JSON.stringify(formData, null, 4);
-
-                    var blob = new Blob([jsonData], { type: 'application/json' });
-                    var url = URL.createObjectURL(blob);
-
-                    // Create a link element to trigger the download
-                    var a = document.createElement('a');
-                    a.href = url;
-                    a.download = `${mrnValue}.json`; // Set the file name to MRN value
-                    document.body.appendChild(a); // Append to the body
-                    a.click(); // Trigger the download
-                    document.body.removeChild(a); // Remove the link
-
-
-                    /* issue with encryption is that secret key can only be obfuscated since
-                    all the code exists locally. probably not worth the hassle of having people
-                    use aes to decrypt vs the security benefit.
-                    // Display JSON in the output div
-                    $("#jsonOutput").text(jsonData);
-    
-                    var secretKey = "your-secret-key"; // Replace with your secret key
-                    var encryptedData = CryptoJS.AES.encrypt(jsonData, secretKey).toString();
-                    */
+                    submit_form();
                 }
                 else {
                     alert("The number you entered does not match the MRN field.");
@@ -936,10 +978,10 @@
     </script>
 
     <script>
-        var discontinuedMedsList = [];
-        var currentMedsList = [];
-        var biologicsList = [];
-        var comorbiditiesList = [];
+        const discontinuedMedsList = [];
+        const currentMedsList = [];
+        const biologicsList = [];
+        const comorbiditiesList = [];
 
         // wrap in an anonymous function so it only runs after DOM is loaded
         $(function () {
