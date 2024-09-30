@@ -208,7 +208,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Groin</td>
+                                    <td>Suprapubic</td>
                                     <td><input type="number" id="groin" name="groin" class="form-control number-box"
                                             placeholder="0" min="0" readonly></td>
                                 </tr>
@@ -220,11 +220,6 @@
                                 <tr>
                                     <td>Inframammary</td>
                                     <td><input type="number" id="inframammary" name="inframammary"
-                                            class="form-control number-box" placeholder="0" min="0" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>Perianal</td>
-                                    <td><input type="number" id="perianal" name="perianal"
                                             class="form-control number-box" placeholder="0" min="0" readonly></td>
                                 </tr>
                                 <tr>
@@ -507,7 +502,7 @@
         const bloodContainer = document.getElementById("blood_tubes");
         const lesion_undo = document.getElementById("clear_last_lesion");
         let bodyImage;
-        let lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
+        let lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "genital": 0, "innerthigh": 0, "other": 0 };
         let gender;
         let response;
         let polygon_dict = {}
@@ -615,12 +610,14 @@
             var tableHeight = lesionTable.offsetHeight;
             if (this.value.trim().toLowerCase() == "male" || this.value.trim().toLowerCase() == "other") {
                 console.log("male");
+                clearCounts();
                 gender = "male";
                 drawImage(gender);
             }
             else if (this.value.trim().toLowerCase() == "female") {
                 console.log("female");
                 gender = "female";
+                clearCounts();
                 drawImage(gender);
             }
             else {
@@ -648,9 +645,6 @@
             }
             if (key.startsWith("Inframammary")) {
                 ctx.fillStyle = "rgba(50,255,0,0.5)"
-            }
-            if (key.startsWith("Perianal")) {
-                ctx.fillStyle = "rgba(20,255,255,0.5)"
             }
             if (key.startsWith("Genital")) {
                 ctx.fillStyle = "rgba(0,0,255,0.5)"
@@ -699,7 +693,6 @@
             document.getElementById("axillae").value = lesioncountsdict["axillae"];
             document.getElementById("groin").value = lesioncountsdict["groin"];
             document.getElementById("buttocks").value = lesioncountsdict["buttocks"];
-            document.getElementById("perianal").value = lesioncountsdict["perianal"];
             document.getElementById("inframammary").value = lesioncountsdict["inframammary"];
             document.getElementById("genital").value = lesioncountsdict["genital"];
             document.getElementById("inner_thigh").value = lesioncountsdict["innerthigh"];
@@ -914,10 +907,9 @@
                 obesity: $("#bmi").val() > 30,
                 hurley: $("#hurley").val(),
                 axillae: $("#axillae").val(),
-                groin: $("#groin").val(),
+                suprapubic: $("#groin").val(),
                 buttocks: $("#buttocks").val(),
                 inframammary: $("#inframammary").val(),
-                perianal: $("#perianal").val(),
                 genital: $("#genital").val(),
                 inner_thigh: $("#inner_thigh").val(),
                 other: $("#other").val(),
