@@ -33,8 +33,8 @@
                         <p>-</p>
                         <!-- Other input (20% width) -->
                         <div class="col-5">
-                            <input type="number" class="form-control" name="enrollment_number" id="enrollment_number"
-                                min="1" max="999" required>
+                            <input type="text" class="form-control" name="enrollment_number" id="enrollment_number"
+                                required>
                         </div>
                     </div>
                 </div>
@@ -53,14 +53,31 @@
                         </div>
 
                         <div class="col-5">
-                            <label for="sample_type" class="d-block" style="text-align: right">Sample Type</label>
-                            <select type="number" class="form-control" name="sample_type" id="sample_type" required>
-                                <option value="" disabled selected>Enter Sample Type</option>
-                                <option value="Blood">Blood</option>
-                                <option value="Saliva">Saliva</option>
-                                <option value="Tissue">Tissue</option>
-                            </select>
+                            <div class="form-group" style="text-align: right;">
+                                <label class="d-block">Sample Type</label>
+                                <div class="d-flex justify-content-between sample-check">
+                                    <div class="form-check">
+                                        <label class="form-check-label sample-check">
+                                            <input type="checkbox" id="blood_checked" name="sample_type" value="Blood"
+                                                required> Blood
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label sample-check">
+                                            <input type="checkbox" id="saliva_checked" name="sample_type" value="Saliva"
+                                                required> Saliva
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label sample-check">
+                                            <input type="checkbox" id="tissue_checked" name="sample_type" value="Tissue"
+                                                required> Tissue
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -124,7 +141,9 @@
             </div>
 
 
-            <hr style="border: none; border-top: 1px solid black; margin: 20px 0">
+            <br>
+            <label class="h4">Patient Basic Demographic Data</label>
+            <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
             <!-- Text Box -->
             <div class="form-group">
                 <label for="first_name">Patient Name</label>
@@ -141,7 +160,7 @@
             </div>
             <div class="form-group">
                 <label for="mrn">MRN</label>
-                <input type="number" class="form-control" name="mrn" id="mrn" required>
+                <input type="text" class="form-control" name="mrn" id="mrn" required>
             </div>
 
             <!-- Date Box -->
@@ -189,8 +208,9 @@
                 </select>
             </div>
             </br>
+            <label class="h4">Lesion Location Counts</label>
+            <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
             <div class="form-group">
-                <label>Lesion Location Counts</label>
                 <div class="row">
                     <div class="col-5">
                         <table class="table" id="lesion_table">
@@ -208,18 +228,18 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Suprapubic</td>
-                                    <td><input type="number" id="groin" name="groin" class="form-control number-box"
+                                    <td>Mammary</td>
+                                    <td><input type="number" id="mammary" name="mammary" class="form-control number-box"
                                             placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td>Other Upper</td>
+                                    <td><input type="number" id="other_upper" name="other_upper"
+                                            class="form-control number-box" placeholder="0" min="0" readonly></td>
                                 </tr>
                                 <tr>
                                     <td>Buttocks</td>
                                     <td><input type="number" id="buttocks" name="buttocks"
-                                            class="form-control number-box" placeholder="0" min="0" readonly></td>
-                                </tr>
-                                <tr>
-                                    <td>Inframammary</td>
-                                    <td><input type="number" id="inframammary" name="inframammary"
                                             class="form-control number-box" placeholder="0" min="0" readonly></td>
                                 </tr>
                                 <tr>
@@ -228,27 +248,56 @@
                                             placeholder="0" min="0" readonly></td>
                                 </tr>
                                 <tr>
-                                    <td>Inner Thigh</td>
-                                    <td><input type="number" id="inner_thigh" name="inner_thigh"
+                                    <td>Other Lower</td>
+                                    <td><input type="number" id="other_lower" name="other_lower"
                                             class="form-control number-box" placeholder="0" min="0" readonly></td>
                                 </tr>
+
                                 <tr>
-                                    <td>Other</td>
-                                    <td><input type="number" id="other" name="other" class="form-control number-box"
+                                    <td><u>HS-IGA Score</u></td>
+                                    <td><input type="number" id="hs-iga" name="hs-iga" class="form-control number-box"
                                             placeholder="0" min="0" readonly></td>
                                 </tr>
+                                <tr>
+                                    <td><u>IHS4 Score</u></td>
+                                    <td><input type="number" id="ihs4" name="ihs4" class="form-control number-box"
+                                            placeholder="0" min="0" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td><u>HS-PGA Score</u></td>
+                                    <td><input type="number" id="pga" name="pga" class="form-control number-box"
+                                            placeholder="0" min="0" readonly></td>
+                                </tr>
+
                             </tbody>
                         </table>
+                        <button id="clear_body_map" type="button" class="btn btn-danger">Clear Lesion Counts</button>
+                        <button id="clear_last_lesion" type="button" class="btn btn-secondary">Undo</button>
                     </div>
-                    <div class="col-5" style="position: relative;">
-                        <canvas id="body_map" style="display: hidden; position: absolute; top: 0; left: 0;"> </canvas>
-                        <canvas id="lesion_map" style="display: hidden; position: absolute; top: 0; left: 0;"> </canvas>
+                    <div class="col-5">
+                        <div style="position: relative;">
+                            <canvas id="body_map" style="display: block; border: none;"></canvas>
+                            <canvas id="lesion_map"
+                                style="display: block; position: absolute; top: 0; left: 0;"></canvas>
+                        </div>
+                        <div style="display: none; justify-content: center; margin-top: 10px;" id="drawing_buttons">
+                            <button class="btn btn-outline-secondary" style="flex: 3.5; margin-right: 5px;"
+                                id="nodule_button">Inflammatory Nodule</button>
+                            <button class="btn btn-outline-secondary" style="flex: 1; margin-right: 5px;"
+                                id="abcess_button">Abcess</button>
+                            <button class="btn btn-outline-secondary" style="flex: 2.5; margin-right: 5px;"
+                                id="draining_tunnel_button">Draining
+                                Tunnel</button>
+                            <button class="btn btn-outline-secondary" style="flex: 3.5;"
+                                id="non-draining_tunnel_button">Non-Draining Tunnel</button>
+                        </div>
                     </div>
                 </div>
-                <button id="clear_body_map" type="button" class="btn btn-danger">Clear Lesion Counts</button>
-                <button id="clear_last_lesion" type="button" class="btn btn-secondary">Undo</button>
-            </div>
 
+            </div>
+            <br>
+            <label class="h4">Patient Risks</label>
+            <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
             <div class="form-group">
                 <label for="smoking_history_yes" class="form-label">Does the patient have a smoking history?</label>
                 <div>
@@ -272,7 +321,6 @@
                         placeholder="Packs per Day" min="0">
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="rec_drugs_history_yes" class="form-label">Does the patient use recreational
                     drugs?</label>
@@ -301,100 +349,163 @@
                 </div>
                 <div id="selected-comorbidities" class="mt-2"></div>
             </div>
-
+            <br>
+            <label class="h4">Family History</label>
+            <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
             <div class="form-group">
                 <label class="form-label">Does the patient have a family history of HS?</label>
                 <div class="form-check">
-                    <input type="checkbox" id="family_history" class="form-check-input" name="family_history">
-                    <label class="form-check-label" for="family_history">Yes</label>
+                    <input type="radio" id="family_history_yes" class="form-check-input" name="family_history"
+                        value="yes">
+                    <label class="form-check-label" for="family_history_yes">Yes</label>
                 </div>
+                <div class="form-check">
+                    <input type="radio" id="family_history_no" class="form-check-input" name="family_history"
+                        value="no">
+                    <label class="form-check-label" for="family_history_no">No</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="family_history_unknown" class="form-check-input" name="family_history"
+                        value="unknown">
+                    <label class="form-check-label" for="family_history_unknown">Unknown</label>
+                </div>
+
                 <div id="familyContainer" style="display: none;">
+                    <br>
                     <label class="form-label">Family Member Contact Information</label>
                     <div class="form-group">
                         <label for="familyRelation">Relation</label>
                         <input type="text" class="form-control" id="familyRelation" placeholder="Relation to Patient">
                     </div>
                     <div class="form-group">
-                        <label for="familyEmail">Email</label>
-                        <input type="email" class="form-control" id="familyEmail" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <label for="familyAddress">Address</label>
-                        <input type="text" class="form-control" id="familyAddress" placeholder="1234 Main St">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="familyCity">City</label>
-                            <input type="text" class="form-control" id="familyCity">
+                        <label class="form-label">Have we already collected a sample from this relation?</label>
+                        <div class="form-check">
+                            <input type="radio" id="family_collect_yes" class="form-check-input" name="family_collect"
+                                value="yes">
+                            <label class="form-check-label" for="family_collect_yes">Yes</label>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="familyState">State</label>
-                            <input list="states" id="familyState" name="familyState" class=form-control />
-                            <datalist id="states">
-                                <option value="AL">
-                                <option value="AK">
-                                <option value="AZ">
-                                <option value="AR">
-                                <option value="CA">
-                                <option value="CO">
-                                <option value="CT">
-                                <option value="DE">
-                                <option value="FL">
-                                <option value="GA">
-                                <option value="HI">
-                                <option value="ID">
-                                <option value="IL">
-                                <option value="IN">
-                                <option value="IA">
-                                <option value="KS">
-                                <option value="KY">
-                                <option value="LA">
-                                <option value="ME">
-                                <option value="MD">
-                                <option value="MA">
-                                <option value="MI">
-                                <option value="MN">
-                                <option value="MS">
-                                <option value="MO">
-                                <option value="MT">
-                                <option value="NE">
-                                <option value="NV">
-                                <option value="NH">
-                                <option value="NJ">
-                                <option value="NM">
-                                <option value="NY">
-                                <option value="NC">
-                                <option value="ND">
-                                <option value="OH">
-                                <option value="OK">
-                                <option value="OR">
-                                <option value="PA">
-                                <option value="RI">
-                                <option value="SC">
-                                <option value="SD">
-                                <option value="TN">
-                                <option value="TX">
-                                <option value="UT">
-                                <option value="VT">
-                                <option value="VA">
-                                <option value="WA">
-                                <option value="WV">
-                                <option value="WI">
-                                <option value="WY">
-                            </datalist>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="familyZip">Zip</label>
-                            <input type="text" class="form-control" id="familyZip">
+                        <div class="form-check">
+                            <input type="radio" id="family_collect_no" class="form-check-input" name="family_collect"
+                                value="no">
+                            <label class="form-check-label" for="family_collect_no">No</label>
                         </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="familyNotes">Notes</label>
-                        <input type="text" class="form-control" id="familyNotes" name="familyNotes">
-                    </div>
-                </div>
-            </div>
+                    <!-- if have -->
 
+                    <div class="form-group" id="relation_id" style="display: none">
+                        <label>Relation Enrollment Number </label>
+                        <div style="display: flex; align-items: center;">
+                            <span>HS - </span> <!-- Text "HS - " -->
+                            <div class="col-2">
+                                <input type="text" class="form-control" name="relation_enrollment_number"
+                                    id="relation_enrollment_number" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- if haven't collected information -->
+                    <div id="new_relation_info" style="display: none">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="text" class="form-control" name="rel_first_name" id="rel_first_name"
+                                        placeholder="First Name" required>
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" name="rel_last_name" id="rel_last_name"
+                                        placeholder="Last Name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="familyEmail">Email</label>
+                            <input type="email" class="form-control" id="familyEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="familyAddress">Address</label>
+                            <input type="text" class="form-control" id="familyAddress" placeholder="1234 Main St">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="familyCity">City</label>
+                                <input type="text" class="form-control" id="familyCity">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="familyState">State</label>
+                                <input list="states" id="familyState" name="familyState" class=form-control />
+                                <datalist id="states">
+                                    <option value="AL">
+                                    <option value="AK">
+                                    <option value="AZ">
+                                    <option value="AR">
+                                    <option value="CA">
+                                    <option value="CO">
+                                    <option value="CT">
+                                    <option value="DE">
+                                    <option value="FL">
+                                    <option value="GA">
+                                    <option value="HI">
+                                    <option value="ID">
+                                    <option value="IL">
+                                    <option value="IN">
+                                    <option value="IA">
+                                    <option value="KS">
+                                    <option value="KY">
+                                    <option value="LA">
+                                    <option value="ME">
+                                    <option value="MD">
+                                    <option value="MA">
+                                    <option value="MI">
+                                    <option value="MN">
+                                    <option value="MS">
+                                    <option value="MO">
+                                    <option value="MT">
+                                    <option value="NE">
+                                    <option value="NV">
+                                    <option value="NH">
+                                    <option value="NJ">
+                                    <option value="NM">
+                                    <option value="NY">
+                                    <option value="NC">
+                                    <option value="ND">
+                                    <option value="OH">
+                                    <option value="OK">
+                                    <option value="OR">
+                                    <option value="PA">
+                                    <option value="RI">
+                                    <option value="SC">
+                                    <option value="SD">
+                                    <option value="TN">
+                                    <option value="TX">
+                                    <option value="UT">
+                                    <option value="VT">
+                                    <option value="VA">
+                                    <option value="WA">
+                                    <option value="WV">
+                                    <option value="WI">
+                                    <option value="WY">
+                                </datalist>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="familyZip">Zip</label>
+                                <input type="text" class="form-control" id="familyZip">
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="familyNotes">Notes</label>
+                            <input type="text" class="form-control" id="familyNotes" name="familyNotes">
+                        </div>
+                    </div>
+                    <button type="button" class="addRelative btn btn-primary" style="margin-top: 10px;">Add Another
+                        Relative</button>
+                    <hr style="border: none; border-top: 1px solid black; margin: 20px 0">
+                </div>
+
+            </div>
+            <br>
+            <label class="h4">Patient Treatments</label>
+            <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
             <div class="form-group">
                 <label class="form-label" for="current_hs_meds">Select Current HS Medications (tap to remove)</label>
                 <div class="suggestions-container">
@@ -478,7 +589,9 @@
 
         // DEBUG
         const debug = true;
-
+        const bloodChecked = document.getElementById('blood_checked');
+        const salivaChecked = document.getElementById('saliva_checked');
+        const tissueChecked = document.getElementById('tissue_checked');
         const smokingHistoryCheckbox = document.getElementById('smoking_history_yes');
         const packHistoryContainer = document.getElementById('packHistoryContainer');
         const biologicCheckbox = document.getElementById('biologics_history');
@@ -492,20 +605,39 @@
         const sexBox = document.getElementById('sex');
         const canvas = document.getElementById('body_map');
         const ctx = canvas.getContext("2d");
+        const relation_id = document.getElementById('relation_id');
+        const new_relation_info = document.getElementById('new_relation_info');
 
         const lesion_canvas = document.getElementById('lesion_map');
         const ltx = lesion_canvas.getContext("2d");
+        ltx.font = '200px Arial'
         const lesionTable = document.getElementById('lesion_table');
         const smoking_radios = document.querySelectorAll('input[name="smoking_history"]');
         const drug_radios = document.querySelectorAll('input[name="rec_drugs_history"]');
-        const sampletypeBox = document.getElementById("sample_type");
+        const family_radios = document.querySelectorAll('input[name="family_history"]');
+        const family_collect_radios = document.querySelectorAll('input[name="family_collect"]');
         const bloodContainer = document.getElementById("blood_tubes");
         const lesion_undo = document.getElementById("clear_last_lesion");
+        const drawing_buttons = document.getElementById("drawing_buttons");
+        let point_style;
         let bodyImage;
-        let lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "genital": 0, "innerthigh": 0, "other": 0 };
+
+        // [nodules, abcess, draining tunnel, non-draining tunnel]
+        let lesiontypesdict = {
+            "axillae": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "mammary": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "genital": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "buttocks": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "other_upper": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "other_lower": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 }
+        };
+        let lesioncountsdict = { "axillae": 0, "mammary": 0, "genital": 0, "buttocks": 0, "other_upper": 0, "other_lower": 0 };
         let gender;
         let response;
-        let polygon_dict = {}
+        let upper_total;
+        let lower_total;
+        let polygon_dict = {};
+        let allowdraw = false;
 
         // get rid of required for everything if debug
         if (debug) {
@@ -528,6 +660,83 @@
             formFields.forEach(field => field.removeAttribute('required'));
         }
 
+        function cloneFamilyContainer(container) {
+            const clone = container.cloneNode(true);
+
+            // Reset the cloned inputs
+            const inputs = clone.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.value = '';
+                if (input.type === 'radio') {
+                    input.checked = false;
+                }
+            });
+
+            // Append the cloned container to the form
+            container.parentNode.appendChild(clone);
+
+            // Add event listener to the new button
+            const addButton = clone.querySelector('.addRelative');
+            addButton.addEventListener('click', function () {
+                cloneFamilyContainer(clone);
+            });
+        }
+
+        // Add event listener for the initial "Add Another Relative" button
+        document.querySelector('.addRelative').addEventListener('click', function () {
+            cloneFamilyContainer(document.getElementById('familyContainer'));
+        });
+
+        // Get all buttons within the container
+        const buttons = drawing_buttons.querySelectorAll('button');
+
+        function resetButtons() {
+            buttons.forEach(btn => {
+                btn.classList.remove('btn-secondary');
+                btn.classList.add('btn-outline-secondary');
+            });
+        }
+
+        // Add click event listener to each button
+        buttons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                if (!allowdraw) {
+                    enableDrawing(lesion_canvas);
+                }
+                event.preventDefault();
+                resetButtons();
+
+                // Change clicked button to btn-outline-secondary
+                this.classList.remove('btn-outline-secondary');
+                this.classList.add('btn-secondary');
+                // Get the text content of the clicked button
+                const buttonId = event.target.id;
+                console.log(buttonId);
+
+                // Perform action based on which button was clicked
+                switch (buttonId) {
+                    case 'nodule_button':
+                        point_style = "Nodule";
+                        break;
+                    case 'abcess_button':
+                        console.log('Abcess button clicked');
+                        point_style = "Abcess";
+                        break;
+                    case 'draining_tunnel_button':
+                        console.log('Draining Tunnel button clicked');
+                        point_style = "Draining Tunnel";
+                        break;
+                    case 'non-draining_tunnel_button':
+                        console.log('Non-Draining Tunnel button clicked');
+                        point_style = "Non-Draining Tunnel";
+                        break;
+                    default:
+                        // should not happen
+                        console.log('Unknown button clicked');
+                }
+            });
+        });
+
         smoking_radios.forEach(radio => {
             radio.addEventListener('change', function () {
                 if (this.value === 'yes') {
@@ -539,13 +748,26 @@
             });
         });
 
-        familyCheckbox.addEventListener('change', function () {
-            if (this.checked) {
-                familyContainer.style.display = 'block';
-            }
-            else {
-                familyContainer.style.display = 'none';
-            }
+        family_radios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.value === 'yes') {
+                    familyContainer.style.display = 'block'; // Show pack history input if "Yes" is selected
+                } else {
+                    familyContainer.style.display = 'none'; // Hide it if "No" or "Unknown" is selected
+                }
+            });
+        });
+
+        family_collect_radios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.value === 'yes') {
+                    new_relation_info.style.display = 'none';
+                    relation_id.style.display = 'block'; // Show pack history input if "Yes" is selected
+                } else {
+                    relation_id.style.display = 'none'; // Hide it if "No" or "Unknown" is selected
+                    new_relation_info.style.display = 'block';
+                }
+            });
         });
 
 
@@ -560,8 +782,8 @@
             }
         });
 
-        sampletypeBox.addEventListener('change', function () {
-            if (this.value == "Blood") {
+        bloodChecked.addEventListener('change', function () {
+            if (this.checked) {
                 bloodContainer.style.display = 'flex';
             }
             else {
@@ -587,27 +809,33 @@
         });
 
         function drawImage(gender_) {
+            // might need to adjust for tablet
             bodyImage = new Image(600, 554);
             canvas.height = lesion_canvas.height = bodyImage.height;
             canvas.width = lesion_canvas.width = bodyImage.width;
+
+            // change buttons to match
+            drawing_buttons.style.width = canvas.offsetWidth + 'px';
+
             bodyImage.onload = drawImageActualSize;
             if (gender_ == "male") {
-                bodyImage.src = "./resources/img/male.png";
+                bodyImage.src = "./resources/img/male-iga.png";
             }
             if (gender_ == "female") {
-                bodyImage.src = "./resources/img/female.png";
+                bodyImage.src = "./resources/img/female-iga.png";
             }
-
         }
 
         function drawImageActualSize() {
             ctx.drawImage(this, 0, 0, this.width, this.height);
             drawPolygons();
+            canvas.style.border = '2px solid black';
         }
 
         sexBox.addEventListener('change', function () {
             console.log("changed sex");
             var tableHeight = lesionTable.offsetHeight;
+            drawing_buttons.style.display = "flex";
             if (this.value.trim().toLowerCase() == "male" || this.value.trim().toLowerCase() == "other") {
                 console.log("male");
                 clearCounts();
@@ -623,6 +851,7 @@
             else {
                 return;
             }
+            disableDrawing(lesion_canvas);
 
         });
 
@@ -637,20 +866,14 @@
             if (key.startsWith("Axillae")) {
                 ctx.fillStyle = "rgba(127,128,0,0.5)"
             }
-            if (key.startsWith("Groin")) {
+            if (key.startsWith("Genital")) {
                 ctx.fillStyle = "rgba(255,0,0,0.5)"
             }
             if (key.startsWith("Buttocks")) {
-                ctx.fillStyle = "rgba(214,15,141,0.5)"
-            }
-            if (key.startsWith("Inframammary")) {
-                ctx.fillStyle = "rgba(50,255,0,0.5)"
-            }
-            if (key.startsWith("Genital")) {
-                ctx.fillStyle = "rgba(0,0,255,0.5)"
-            }
-            if (key.startsWith("InnerThigh")) {
                 ctx.fillStyle = "rgba(28,144,255,0.5)"
+            }
+            if (key.startsWith("Mammary")) {
+                ctx.fillStyle = "rgba(50,255,0,0.5)"
             }
             ctx.fill();
             ctx.stroke();
@@ -691,21 +914,27 @@
         // Update counters on the page
         function updateCounters() {
             document.getElementById("axillae").value = lesioncountsdict["axillae"];
-            document.getElementById("groin").value = lesioncountsdict["groin"];
+            document.getElementById("mammary").value = lesioncountsdict["mammary"];
             document.getElementById("buttocks").value = lesioncountsdict["buttocks"];
-            document.getElementById("inframammary").value = lesioncountsdict["inframammary"];
             document.getElementById("genital").value = lesioncountsdict["genital"];
-            document.getElementById("inner_thigh").value = lesioncountsdict["innerthigh"];
-            document.getElementById("other").value = lesioncountsdict["other"];
+            document.getElementById("other_lower").value = lesioncountsdict["other_lower"];
+            document.getElementById("other_upper").value = lesioncountsdict["other_upper"];
+            upper_total = lesioncountsdict["other_upper"] + lesioncountsdict["mammary"] + lesioncountsdict["axillae"];
+            lower_total = lesioncountsdict["other_lower"] + lesioncountsdict["genital"] + lesioncountsdict["buttocks"];
+            document.getElementById("hs-iga").value = hs_iga_scr(Math.max(upper_total, lower_total));
+            document.getElementById("ihs4").value = ihs4_scr(lesiontypesdict);
+            document.getElementById("pga").value = pga_scr(lesiontypesdict);
         }
 
         const lesion_body_parts = [];
         // Check which body part is clicked based on coordinates
         function checkBodyPart(x, y) {
             let output_key;
+            let lower_region;
             const point = [x, y];
             var validpoint = false;
             if (gender == "male") {
+                lower_region = male_lower;
                 for (const key in male_polygons) {
                     if (isPointInPolygon(point, male_polygons[key])) {
                         var key_str = key.replace(/[0-9]/g, '').toLowerCase();
@@ -716,6 +945,7 @@
                 }
             }
             if (gender == "female") {
+                lower_region = female_lower;
                 for (const key in female_polygons) {
                     if (isPointInPolygon(point, female_polygons[key])) {
                         var key_str = key.replace(/[0-9]/g, '').toLowerCase();
@@ -726,18 +956,77 @@
                 }
             }
             if (!validpoint) {
-                output_key = "other";
+                // check if point is in upper or lower body
+                if (isPointInPolygon(point, lower_region[0]) || isPointInPolygon(point, lower_region[1])) {
+                    output_key = "other_lower";
+                }
+                else {
+                    output_key = "other_upper";
+                }
             }
-            lesion_body_parts.push(output_key);
+            lesion_body_parts.push([output_key, point_style]);
             lesioncountsdict[output_key] += 1;
+            lesiontypesdict[output_key][point_style] += 1;
             updateCounters();
         }
 
         function clearCounts() {
             ltx.clearRect(0, 0, lesion_canvas.width, lesion_canvas.height);
-            lesioncountsdict = { "axillae": 0, "groin": 0, "buttocks": 0, "inframammary": 0, "perianal": 0, "genital": 0, "innerthigh": 0, "other": 0 };
+            lesioncountsdict = { "axillae": 0, "mammary": 0, "genital": 0, "buttocks": 0, "other_upper": 0, "other_lower": 0 };
+            lesiontypesdict = {
+                "axillae": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "mammary": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "genital": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "buttocks": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "other_upper": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "other_lower": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 }
+            };
             updateCounters();
+        }
 
+        function grayOutCanvas() {
+            ltx.fillStyle = "rgba(128, 128, 128, 0.5)";  // Gray color with 50% opacity
+            ltx.fillRect(0, 0, lesion_canvas.width, lesion_canvas.height);
+            ltx.textAlign = "center";  // Center text horizontally
+            ltx.textBaseline = "middle";
+            ltx.font = "40px Arial";
+            ltx.fillStyle = "white";
+            ltx.fillText("Pick a Lesion Type", lesion_canvas.width / 2, lesion_canvas.height / 2);
+        }
+
+        function disableDrawing() {
+            allowdraw = false;
+            grayOutCanvas();
+        }
+
+        // To re-enable drawing, you would need to reassign the event handlers
+        function enableDrawing() {
+            allowdraw = true;
+            ltx.clearRect(0, 0, lesion_canvas.width, lesion_canvas.height);
+        }
+
+
+
+        function drawPoint(x, y, ps) {
+            ltx.beginPath();
+            ltx.fillStyle = "black";
+            ltx.strokeStyle = "black";
+            if (ps == "Nodule") {
+                ltx.arc(x, y, 2.5, 0, Math.PI * 2);
+                ltx.fill();
+            }
+            else if (ps == "Draining Tunnel") {
+                ltx.font = "15px Arial";
+                ltx.fillText("+", x, y);
+            }
+            else if (ps == "Non-Draining Tunnel") {
+                ltx.font = "12px Arial";
+                ltx.fillText("x", x, y);
+            }
+            else if (ps == "Abcess") {
+                ltx.arc(x, y, 2.5, 0, Math.PI * 2);
+                ltx.stroke();
+            }
         }
 
 
@@ -745,45 +1034,41 @@
         const lesion_points = []
         // Draw lesion point
         lesion_canvas.addEventListener("click", function (event) {
-            rect = lesion_canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            let body_region;
+            if (allowdraw) {
+                rect = lesion_canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                let body_region;
 
-            if (gender == "male") {
-                body_region = male_region;
+                if (gender == "male") {
+                    body_region = male_region;
+                }
+                else {
+                    body_region = female_region;
+                }
+
+                // two bodies per img
+                if (!isPointInPolygon([x, y], body_region[0]) && !isPointInPolygon([x, y], body_region[1])) {
+                    console.log("point not on body");
+                    return;
+                }
+
+                lesion_points.push([x, y, point_style]);
+
+                if ($("#sex").val()) {
+                    // Mark the clicked point on the canvas
+                    drawPoint(x, y, point_style);
+                }
+
+                // Check which body part was clicked
+                checkBodyPart(x, y);
             }
-            else {
-                body_region = female_region;
-            }
-
-            // two bodies per img
-            if (!isPointInPolygon([x, y], body_region[0]) && !isPointInPolygon([x, y], body_region[1])) {
-                console.log("point not on body");
-                return;
-            }
-
-            lesion_points.push([x, y]);
-
-            if ($("#sex").val()) {
-                // Mark the clicked point on the canvas
-                ltx.beginPath();
-                ltx.arc(x, y, 2, 0, Math.PI * 2);
-                ltx.fillStyle = "#4d0202";
-                ltx.fill();
-            }
-
-            // Check which body part was clicked
-            checkBodyPart(x, y);
         });
 
         function redraw_lesion_points() {
             ltx.clearRect(0, 0, lesion_canvas.width, lesion_canvas.height);
             for (const lesion of lesion_points) {
-                ltx.beginPath();
-                ltx.arc(lesion[0], lesion[1], 2, 0, Math.PI * 2);
-                ltx.fillStyle = "#4d0202";
-                ltx.fill();
+                drawPoint(lesion[0], lesion[1], lesion[2]);
             }
         }
 
@@ -792,7 +1077,8 @@
                 lesion_points.pop();
                 redraw_lesion_points();
                 last_part = lesion_body_parts.pop();
-                lesioncountsdict[last_part] -= 1;
+                lesioncountsdict[last_part[0]] -= 1;
+                lesiontypesdict[last_part[0]][last_part[1]] -= 1;
                 updateCounters();
 
             }
@@ -883,6 +1169,19 @@
                 family_history_list = {};
             }
 
+            const sample_type = [];
+
+            // Check the state of each checkbox and get its value if checked
+            // Add the value to the array if the checkbox is checked
+            if (bloodChecked.checked) {
+                sample_type.push(bloodChecked.value);
+            }
+            if (salivaChecked.checked) {
+                sample_type.push(salivaChecked.value);
+            }
+            if (tissueChecked.checked) {
+                sample_type.push(tissueChecked.value);
+            }
 
             let today = new Date();
 
@@ -891,7 +1190,7 @@
                 disease_state: $("#disease_state").val(),
                 enrollment_number: $("#enrollment_number").val(),
                 collection_site: $("#collection_site").val(),
-                sample_type: $("#sample_type").val(),
+                sample_type: sample_type,
                 blood_g: $("#green_tube").val(),
                 blood_r: $("#red_tube").val(),
                 blood_p: $("#purple_tube").val(),
@@ -907,12 +1206,13 @@
                 obesity: $("#bmi").val() > 30,
                 hurley: $("#hurley").val(),
                 axillae: $("#axillae").val(),
-                suprapubic: $("#groin").val(),
                 buttocks: $("#buttocks").val(),
-                inframammary: $("#inframammary").val(),
+                mammary: $("#mammary").val(),
                 genital: $("#genital").val(),
-                inner_thigh: $("#inner_thigh").val(),
-                other: $("#other").val(),
+                other_upper: $("#other_upper").val(),
+                other_lower: $("#other_lower").val(),
+                upper_total: upper_total,
+                lower_total: lower_total,
                 family_history: $("#family_history").is(":checked"),
                 family_contact: family_history_list,
                 smoking_history: smokingValue,

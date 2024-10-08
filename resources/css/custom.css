@@ -15,6 +15,12 @@ label {
     font-weight: normal !important;
 }
 
+
+.sample-check {
+    font-weight: normal !important;
+    font-size: 19px;
+}
+
 .badge {
     margin-right: 10px;
     /* Add space between badges */
