@@ -12,6 +12,58 @@
     <link href="./resources/css/custom.css" rel="stylesheet">
     <link href="./resources/img/hfhs.ico" rel="shortcut icon">
 </head>
+<datalist id="states">
+    <option value="AL">
+    <option value="AK">
+    <option value="AZ">
+    <option value="AR">
+    <option value="CA">
+    <option value="CO">
+    <option value="CT">
+    <option value="DE">
+    <option value="FL">
+    <option value="GA">
+    <option value="HI">
+    <option value="ID">
+    <option value="IL">
+    <option value="IN">
+    <option value="IA">
+    <option value="KS">
+    <option value="KY">
+    <option value="LA">
+    <option value="ME">
+    <option value="MD">
+    <option value="MA">
+    <option value="MI">
+    <option value="MN">
+    <option value="MS">
+    <option value="MO">
+    <option value="MT">
+    <option value="NE">
+    <option value="NV">
+    <option value="NH">
+    <option value="NJ">
+    <option value="NM">
+    <option value="NY">
+    <option value="NC">
+    <option value="ND">
+    <option value="OH">
+    <option value="OK">
+    <option value="OR">
+    <option value="PA">
+    <option value="RI">
+    <option value="SC">
+    <option value="SD">
+    <option value="TN">
+    <option value="TX">
+    <option value="UT">
+    <option value="VT">
+    <option value="VA">
+    <option value="WA">
+    <option value="WV">
+    <option value="WI">
+    <option value="WY">
+</datalist>
 
 <body>
 
@@ -42,36 +94,25 @@
                 <div class="form-group col-8 ml-auto">
                     <div class="row justify-content-end">
                         <div class="col-5">
-                            <label for="collection_site" class="d-block" style="text-align: right">Collection
-                                Site</label>
-                            <select class="form-control" id="collection_site" name="collection_site" required>
-                                <option value="" disabled selected>Enter Site</option>
-                                <option value="hamzavi_clinic">Hamzavi Clinic</option>
-                                <option value="new_center_one">New Center One</option>
-                                <option value="wayne">WSU</option>
-                            </select>
-                        </div>
-
-                        <div class="col-5">
                             <div class="form-group" style="text-align: right;">
                                 <label class="d-block">Sample Type</label>
                                 <div class="d-flex justify-content-between sample-check">
                                     <div class="form-check">
                                         <label class="form-check-label sample-check">
-                                            <input type="checkbox" id="blood_checked" name="sample_type" value="Blood"
-                                                required> Blood
+                                            <input type="checkbox" id="blood_checked" name="sample_type" value="Blood">
+                                            Blood
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label sample-check">
-                                            <input type="checkbox" id="saliva_checked" name="sample_type" value="Saliva"
-                                                required> Saliva
+                                            <input type="checkbox" id="saliva_checked" name="sample_type"
+                                                value="Saliva"> Saliva
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label sample-check">
-                                            <input type="checkbox" id="tissue_checked" name="sample_type" value="Tissue"
-                                                required> Tissue
+                                            <input type="checkbox" id="tissue_checked" name="sample_type"
+                                                value="Tissue"> Tissue
                                         </label>
                                     </div>
                                 </div>
@@ -127,7 +168,20 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="first_name">Collector Name</label>
+                <div class="row">
+                    <div class="col-3">
+                        <label for="collection_site">Collection Site</label>
+                        <select class="form-control" id="collection_site" name="collection_site" required>
+                            <option value="" disabled selected>Enter Site</option>
+                            <option value="hamzavi_clinic">Hamzavi Clinic</option>
+                            <option value="new_center_one">New Center One</option>
+                            <option value="wayne">WSU</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Collector Name</label>
                 <div class="row">
                     <div class="col-4">
                         <input type="text" class="form-control" name="col_first_name" id="col_first_name"
@@ -140,48 +194,12 @@
                 </div>
             </div>
 
-
             <br>
             <label class="h4">Patient Basic Demographic Data</label>
             <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
-            <!-- Text Box -->
-            <div class="form-group">
-                <label for="first_name">Patient Name</label>
-                <div class="row">
-                    <div class="col-4">
-                        <input type="text" class="form-control" name="first_name" id="first_name"
-                            placeholder="First Name" required>
-                    </div>
-                    <div class="col-4">
-                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name"
-                            required>
-                    </div>
-                </div>
-            </div>
             <div class="form-group">
                 <label for="mrn">MRN</label>
                 <input type="text" class="form-control" name="mrn" id="mrn" required>
-            </div>
-
-            <!-- Date Box -->
-            <div class="form-group">
-                <label for="dob">Patient Date of Birth</label>
-                <input type="date" class="form-control" id="dob" name="dob" required>
-            </div>
-
-            <div class="form-group">
-                <label for="race">Race</label>
-                <select class="form-control" id="race" name="race" required>
-                    <option value="" disabled selected>Enter Race</option>
-                    <option value="african_american">African American</option>
-                    <option value="caucasian">Caucasian</option>
-                    <option value="asian">Asian</option>
-                    <option value="hispanic">Hispanic/Latino</option>
-                    <option value="native_american">Native American</option>
-                    <option value="other">Other</option>
-                </select>
-                <input type="text" class="form-control" id="race-other" name="race-other" style="display: none;"
-                    placeholder="Enter Race">
             </div>
             <div class="form-group">
                 <label for="sex">Sex</label>
@@ -190,21 +208,6 @@
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="bmi">BMI</label>
-                <input type="number" class="form-control" id="bmi" name="bmi" step="0.01" min="0"
-                    placeholder="Enter BMI">
-            </div>
-
-            <div class="form-group">
-                <label for="hurley">Hurley Stage (Highest)</label>
-                <select class="form-control" id="hurley" name="hurley" required>
-                    <option value="" disabled selected>Enter Hurley Stage</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
                 </select>
             </div>
             </br>
@@ -298,67 +301,13 @@
 
             </div>
             <br>
-            <label class="h4">Patient Risks</label>
-            <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
-            <div class="form-group">
-                <label for="smoking_history_yes" class="form-label">Does the patient have a smoking history?</label>
-                <div>
-                    <input type="radio" id="smoking_history_yes" name="smoking_history" value="yes"
-                        class="form-radio-input">
-                    <label class="form-check-label" for="smoking_history_yes">Yes</label>
-                </div>
-                <div>
-                    <input type="radio" id="smoking_history_no" name="smoking_history" value="no"
-                        class="form-radio-input">
-                    <label class="form-check-label" for="smoking_history_no">No</label>
-                </div>
-                <div>
-                    <input type="radio" id="smoking_history_unknown" name="smoking_history" value="unknown"
-                        class="form-radio-input">
-                    <label class="form-check-label" for="smoking_history_unknown">Unknown</label>
-                </div>
-                <div class="mb-3" id="packHistoryContainer" style="display: none;">
-                    <label for="packHistory" class="form-label">Pack History:</label>
-                    <input type="number" id="packHistory" name="pack_history" class="form-control"
-                        placeholder="Packs per Day" min="0">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="rec_drugs_history_yes" class="form-label">Does the patient use recreational
-                    drugs?</label>
-                <div>
-                    <input type="radio" id="rec_drugs_history_yes" name="rec_drugs_history" value="yes"
-                        class="form-radio-input">
-                    <label class="form-check-label" for="rec_drugs_history_yes">Yes</label>
-                </div>
-                <div>
-                    <input type="radio" id="rec_drugs_history_no" name="rec_drugs_history" value="no"
-                        class="form-radio-input">
-                    <label class="form-check-label" for="rec_drugs_history_no">No</label>
-                </div>
-                <div>
-                    <input type="radio" id="rec_drugs_history_unkown" name="rec_drugs_history" value="unknown"
-                        class="form-radio-input">
-                    <label class="form-check-label" for="rec_drugs_history_unkown">Unknown</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="comorbidities">Select Comorbidities (tap to remove)</label>
-                <div class="suggestions-container">
-                    <input type="text" id="comorbidities" class="form-control"
-                        placeholder="Type to search, if not found press enter to add new item..." />
-                </div>
-                <div id="selected-comorbidities" class="mt-2"></div>
-            </div>
-            <br>
             <label class="h4">Family History</label>
             <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
-            <div class="form-group" id="family_parent">
+            <div class="form-group">
                 <label class="form-label">Does the patient have a family history of HS?</label>
                 <div class="form-check">
                     <input type="radio" id="family_history_yes" class="form-check-input" name="family_history"
-                        value="yes">
+                        value="yes" required>
                     <label class="form-check-label" for="family_history_yes">Yes</label>
                 </div>
                 <div class="form-check">
@@ -371,7 +320,8 @@
                         value="unknown">
                     <label class="form-check-label" for="family_history_unknown">Unknown</label>
                 </div>
-                <br>
+            </div>
+            <div class="form-group" id="family_parent" style="display: none;">
                 <div id="familyContainer" style="display: none;">
                     <label class="form-label" id="family_title"><u>Family Member 1:</u></label>
                     <div class="form-group">
@@ -399,7 +349,7 @@
                             <span>HS - </span> <!-- Text "HS - " -->
                             <div class="col-2">
                                 <input type="text" class="form-control" name="relation_enrollment_number"
-                                    id="relation_enrollment_number" required>
+                                    id="relation_enrollment_number">
                             </div>
                         </div>
                     </div>
@@ -411,17 +361,23 @@
                             <div class="row">
                                 <div class="col-4">
                                     <input type="text" class="form-control" name="rel_first_name" id="rel_first_name"
-                                        placeholder="First Name" required>
+                                        placeholder="First Name">
                                 </div>
                                 <div class="col-4">
                                     <input type="text" class="form-control" name="rel_last_name" id="rel_last_name"
-                                        placeholder="Last Name" required>
+                                        placeholder="Last Name">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="familyEmail">Email</label>
                             <input type="email" class="form-control" id="familyEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="familyPhone">Phone Number</label>
+                            <input type="tel" class="form-control" id="familyPhone" placeholder="Phone Number"
+                                pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+                            <small class="form-text text-muted">Format: 1234567890</small>
                         </div>
                         <div class="form-group">
                             <label for="familyAddress">Address</label>
@@ -434,59 +390,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="familyState">State</label>
-                                <input list="states" id="familyState" name="familyState" class=form-control />
-                                <datalist>
-                                    <option value="AL">
-                                    <option value="AK">
-                                    <option value="AZ">
-                                    <option value="AR">
-                                    <option value="CA">
-                                    <option value="CO">
-                                    <option value="CT">
-                                    <option value="DE">
-                                    <option value="FL">
-                                    <option value="GA">
-                                    <option value="HI">
-                                    <option value="ID">
-                                    <option value="IL">
-                                    <option value="IN">
-                                    <option value="IA">
-                                    <option value="KS">
-                                    <option value="KY">
-                                    <option value="LA">
-                                    <option value="ME">
-                                    <option value="MD">
-                                    <option value="MA">
-                                    <option value="MI">
-                                    <option value="MN">
-                                    <option value="MS">
-                                    <option value="MO">
-                                    <option value="MT">
-                                    <option value="NE">
-                                    <option value="NV">
-                                    <option value="NH">
-                                    <option value="NJ">
-                                    <option value="NM">
-                                    <option value="NY">
-                                    <option value="NC">
-                                    <option value="ND">
-                                    <option value="OH">
-                                    <option value="OK">
-                                    <option value="OR">
-                                    <option value="PA">
-                                    <option value="RI">
-                                    <option value="SC">
-                                    <option value="SD">
-                                    <option value="TN">
-                                    <option value="TX">
-                                    <option value="UT">
-                                    <option value="VT">
-                                    <option value="VA">
-                                    <option value="WA">
-                                    <option value="WV">
-                                    <option value="WI">
-                                    <option value="WY">
-                                </datalist>
+                                <input list="states" id="familyState" name="familyState" class=form-control>
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="familyZip">Zip</label>
@@ -504,75 +408,16 @@
                 </div>
 
             </div>
-            <br>
-            <label class="h4">Patient Treatments</label>
-            <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
-            <div class="form-group">
-                <label class="form-label" for="current_hs_meds">Select Current HS Medications (tap to remove)</label>
-                <div class="suggestions-container">
-                    <input type="text" id="current_hs_meds" class="form-control"
-                        placeholder="Type to search, if not found press enter to add new item..." />
-                </div>
-                <div id="selected-curr-hs-meds" class="mt-2"></div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="disc_hs_meds">Select Discontinued HS Medications (tap to remove)</label>
-                <div class="suggestions-container">
-                    <input type="text" id="disc_hs_meds" class="form-control"
-                        placeholder="Type to search, if not found press enter to add new item..." />
-                </div>
-                <div id="selected-disc-hs-meds" class="mt-2"></div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Is the patient on a biologic?</label>
-                <div class="form-check">
-                    <input type="checkbox" id="biologics_history" class="form-check-input">
-                    <label class="form-check-label" for="biologics_history">Yes</label>
-                </div>
-                <div class="mb-3" id="biologicsContainer" style="display: none;">
-                    <label class="form-label" for="biologics_list">Name/Type of Biologic (tap to remove)</label>
-                    <div>
-                        <input type="text" id="biologics_list" class="form-control" placeholder="Type to search..." />
-                    </div>
-                    <div id="selected-biologics" class="mt-2"></div>
-                    <label class="form-label" for="biologics_response">Effect of biologic treatment on patient HS
-                        condition</label>
-                    <select class="form-control" id="biologics_response" name="biologics_response">
-                        <option value="" disabled selected>Select Option</option>
-                        <option value="improve">Improve</option>
-                        <option value="no_change">No Change</option>
-                        <option value="worsen">Worsening</option>
-                    </select>
-                    <input type="text" class="form-control" id="suggestionBox" name="suggestionBox"
-                        placeholder="Describe lesion changes if any...">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Any surgeries/procedures for HS lesions?</label>
-                <div class="form-check">
-                    <input type="checkbox" id="procedures_history_check" class="form-check-input">
-                    <label class="form-check-label" class="form-control" for="procedures_history_check">Yes</label>
-                </div>
-                <div class="mb-3" id="proceduresContainer" style="display: none;">
-                    <input type="text" id="procedures_history" class="form-control" placeholder="Explain..">
-                </div>
-            </div>
-
-
-
-
 
             <!-- Text Box with Suggestions -->
             <div class="form-group">
-                <label for="other_notes">Other Notes (Optional)</label>
+                <label for="other_notes">Other Notes</label>
                 <input type="text" class="form-control" id="other_notes" name="other_notes"
                     placeholder="Type something...">
             </div>
-
             <button type="submit" class="btn btn-primary">Submit</button>
+            <br>
+            <br>
         </form>
     </div>
 
@@ -587,23 +432,13 @@
 
     <!-- hidden questions -->
     <script>
-
-        // DEBUG
         const family_container_base = document.getElementById('familyContainer').innerHTML;
-        const debug = true;
+        const debug = false;
         const bloodChecked = document.getElementById('blood_checked');
         const salivaChecked = document.getElementById('saliva_checked');
         const tissueChecked = document.getElementById('tissue_checked');
-        const smokingHistoryCheckbox = document.getElementById('smoking_history_yes');
-        const packHistoryContainer = document.getElementById('packHistoryContainer');
-        const biologicCheckbox = document.getElementById('biologics_history');
-        const biologicsContainer = document.getElementById('biologicsContainer');
-        const proceduresCheckbox = document.getElementById('procedures_history_check');
-        const proceduresContainer = document.getElementById('proceduresContainer');
         const familyContainer = document.getElementById('familyContainer');
         const familyCheckbox = document.getElementById('family_history');
-        const raceBox = document.getElementById('race');
-        const raceContainer = document.getElementById('race-other');
         const sexBox = document.getElementById('sex');
         const canvas = document.getElementById('body_map');
         const ctx = canvas.getContext("2d");
@@ -613,10 +448,9 @@
 
         const lesion_canvas = document.getElementById('lesion_map');
         const ltx = lesion_canvas.getContext("2d");
-        ltx.font = '200px Arial'
+
         const lesionTable = document.getElementById('lesion_table');
-        const smoking_radios = document.querySelectorAll('input[name="smoking_history"]');
-        const drug_radios = document.querySelectorAll('input[name="rec_drugs_history"]');
+
         const family_radios = document.querySelectorAll('input[name="family_history"]');
         const family_collect_radios = document.querySelectorAll('input[name="family_collect"]');
         const bloodContainer = document.getElementById("blood_tubes");
@@ -637,7 +471,7 @@
         };
         let lesioncountsdict = { "axillae": 0, "mammary": 0, "genital": 0, "buttocks": 0, "other_upper": 0, "other_lower": 0 };
         let gender;
-        let response;
+
         let upper_total;
         let lower_total;
         let polygon_dict = {};
@@ -667,6 +501,7 @@
         function appendFamilyContainer() {
             let new_family_container = document.createElement('div');
             number_of_relations++;
+            console.log(number_of_relations);
             new_family_container.id = 'familyContainer' + number_of_relations;
             new_family_container.innerHTML = family_container_base;
 
@@ -687,6 +522,7 @@
             new_family_container.querySelector('#rel_first_name').id = 'rel_first_name' + '_' + number_of_relations;
             new_family_container.querySelector('#rel_last_name').id = 'rel_last_name' + '_' + number_of_relations;
             new_family_container.querySelector('#familyEmail').id = 'familyEmail' + '_' + number_of_relations;
+            new_family_container.querySelector('#familyPhone').id = 'familyPhone' + '_' + number_of_relations;
             new_family_container.querySelector('#familyAddress').id = 'familyAddress' + '_' + number_of_relations;
             new_family_container.querySelector('#familyCity').id = 'familyCity' + '_' + number_of_relations;
             new_family_container.querySelector('#familyState').id = 'familyState' + '_' + number_of_relations;
@@ -697,7 +533,7 @@
             family_parent.appendChild(new_family_container);
         }
 
-        // Get all buttons within the container
+        // Get all drawing buttons
         const buttons = drawing_buttons.querySelectorAll('button');
 
         function resetButtons() {
@@ -749,27 +585,27 @@
                 }
             });
         });
-
-        smoking_radios.forEach(radio => {
-            radio.addEventListener('change', function () {
-                if (this.value === 'yes') {
-                    packHistoryContainer.style.display = 'block'; // Show pack history input if "Yes" is selected
-                } else {
-                    packHistoryContainer.style.display = 'none'; // Hide it if "No" or "Unknown" is selected
-                    $("#packHistory").val("");
-                }
-            });
-        });
-
+        let prev_num_relations = -1;
         family_radios.forEach(radio => {
             radio.addEventListener('change', function () {
                 if (this.value === 'yes') {
+                    family_parent.style.display = 'block';
                     familyContainer.style.display = 'block'; // Show pack history input if "Yes" is selected
-                    number_of_relations++;
+                    if (prev_num_relations != -1) {
+                        number_of_relations = prev_num_relations;
+                    }
+                    else {
+                        number_of_relations = 1;
+                    }
                 } else {
+                    family_parent.style.display = 'none';
                     familyContainer.style.display = 'none'; // Hide it if "No" or "Unknown" is selected
-                    number_of_relations--;
+                    if (number_of_relations != 0) {
+                        prev_num_relations = number_of_relations;
+                    }
+                    number_of_relations = 0;
                 }
+                console.log(number_of_relations);
             });
         });
 
@@ -830,17 +666,6 @@
         });
 
 
-        raceBox.addEventListener('change', function () {
-            if (this.value == "other") {
-                raceContainer.style.display = 'block';
-                raceContainer.required = true;
-            }
-            else {
-                raceContainer.style.display = 'none';
-                raceContainer.required = false;
-            }
-        });
-
         bloodChecked.addEventListener('change', function () {
             if (this.checked) {
                 bloodContainer.style.display = 'flex';
@@ -850,22 +675,6 @@
             }
         });
 
-
-        biologicCheckbox.addEventListener('change', function () {
-            if (this.checked) {
-                biologicsContainer.style.display = 'block'; // Show pack history input if checkbox is checked
-            } else {
-                biologicsContainer.style.display = 'none'; // Hide it if unchecked
-            }
-        });
-
-        proceduresCheckbox.addEventListener('change', function () {
-            if (this.checked) {
-                proceduresContainer.style.display = 'block'; // Show pack history input if checkbox is checked
-            } else {
-                proceduresContainer.style.display = 'none'; // Hide it if unchecked
-            }
-        });
 
         function drawImage(gender_) {
             // might need to adjust for tablet
@@ -1158,6 +967,8 @@
 
     </script>
 
+
+    <!-- Submit form as JSON -->
     <script>
         const form = document.getElementById('dataForm');
 
@@ -1177,59 +988,57 @@
             }
         });
 
-        function get_age(dob, date) {
-            const dob_y = dob.getFullYear();
-            const dob_m = dob.getMonth();
-            const dob_d = dob.getDate();
-
-            const d_y = date.getFullYear();
-            const d_m = date.getMonth();
-            const d_d = date.getDate();
-
-            let age = d_y - dob_y
-            if (d_m > dob_m || (d_m == dob_m && d_d >= dob_d)) {
-                age += 1;
-            }
-
-            return age;
-        }
-
         function submit_form() {
-            let race_val = $("#race").val();
-            if (race_val == "other") {
-                race_val = $("#race-other").val();
-            }
+            let family_history_list = [];
+            if (number_of_relations > 0) {
+                for (let i = 1; i <= number_of_relations; i++) {
+                    if (i == 1) {
 
-            let smokingValue;
-            for (const radio of smoking_radios) {
-                if (radio.checked) {
-                    smokingValue = radio.value;
-                    break;
+                        if (document.getElementById("family_collect_yes").checked) {
+                            family_history_list.push({
+                                relation: document.getElementById("familyRelation").value,
+                                enrollment_number: document.getElementById("relation_enrollment_number").value
+                            });
+                        }
+                        else {
+                            family_history_list.push({
+                                relation: document.getElementById("familyRelation").value,
+                                first_name: document.getElementById("rel_first_name").value,
+                                last_name: document.getElementById("rel_last_name").value,
+                                email: document.getElementById("familyEmail").value,
+                                phone: document.getElementById("familyPhone").value,
+                                address: document.getElementById("familyAddress").value,
+                                city: document.getElementById("familyCity").value,
+                                state: document.getElementById("familyState").value,
+                                zip: document.getElementById("familyZip").value,
+                                notes: document.getElementById("familyNotes").value
+                            });
+                        }
+                    }
+                    else {
+                        if (document.getElementById("family_collect_yes" + '_' + i).checked) {
+                            family_history_list.push({
+                                relation: document.getElementById("familyRelation" + '_' + i).value,
+                                enrollment_number: document.getElementById("relation_enrollment_number" + '_' + i).value
+                            });
+                        }
+                        else {
+                            family_history_list.push({
+                                relation: document.getElementById("familyRelation" + '_' + i).value,
+                                first_name: document.getElementById("rel_first_name" + '_' + i).value,
+                                last_name: document.getElementById("rel_last_name" + '_' + i).value,
+                                email: document.getElementById("familyEmail" + '_' + i).value,
+                                phone: document.getElementById("familyPhone" + '_' + i).value,
+                                address: document.getElementById("familyAddress" + '_' + i).value,
+                                city: document.getElementById("familyCity" + '_' + i).value,
+                                state: document.getElementById("familyState" + '_' + i).value,
+                                zip: document.getElementById("familyZip" + '_' + i).value,
+                                notes: document.getElementById("familyNotes" + '_' + i).value
+                            });
+                        }
+                    }
                 }
-            }
 
-            let recdrugsValue;
-
-            for (const radio of drug_radios) {
-                if (radio.checked) {
-                    recdrugsValue = radio.value;
-                    break;
-                }
-            }
-
-            let family_history_list;
-            if ($("#family_history").is(":checked")) {
-                family_history_list = {
-                    relation: $("familyRelation").val(),
-                    email: $("familyEmail").val(),
-                    address: $("familyAddress").val(),
-                    city: $("familyCity").val(),
-                    state: $("familyState").val(),
-                    zip: $("familyZip").val()
-                };
-            }
-            else {
-                family_history_list = {};
             }
 
             const sample_type = [];
@@ -1257,17 +1066,10 @@
                 blood_g: $("#green_tube").val(),
                 blood_r: $("#red_tube").val(),
                 blood_p: $("#purple_tube").val(),
-                collector_name: $("#col_first_name").val() + ' ' + $("#col_last_name").val(),
-                first_name: $("#first_name").val(),
-                last_name: $("#last_name").val(),
+                collector_name: ($("#col_first_name").val() + ' ' + $("#col_last_name").val()).toLowerCase(),
                 MRN: $("#mrn").val(),
-                dob: $("#dob").val(),
-                age: get_age(new Date($("#dob").val()), today),
-                race: race_val,
                 sex: $("#sex").val(),
-                bmi: $("#bmi").val(),
                 obesity: $("#bmi").val() > 30,
-                hurley: $("#hurley").val(),
                 axillae: $("#axillae").val(),
                 buttocks: $("#buttocks").val(),
                 mammary: $("#mammary").val(),
@@ -1276,19 +1078,12 @@
                 other_lower: $("#other_lower").val(),
                 upper_total: upper_total,
                 lower_total: lower_total,
+                iga_score: $("#hs-iga").val(),
+                ihs4_score: $("#ihs4").val(),
+                pga_score: $("#pga").val(),
                 family_history: $("#family_history").is(":checked"),
                 family_contact: family_history_list,
-                smoking_history: smokingValue,
-                pack_history: $("#packHistory").val(),
-                recdrugs_usage: recdrugsValue,
-                comorbidities: comorbiditiesList, // Assuming this will hold selected comorbidities
-                current_hs_meds: currentMedsList, // Assuming this will hold selected current meds
-                disc_hs_meds: discontinuedMedsList, // Assuming this will hold selected discontinued meds
-                biologics_history: $("#biologics_history").is(":checked"),
-                biologics_list: biologicsList,
-                biologics_response: $("#biologics_response").val(),
-                procedures_history_check: $("#procedures_history_check").is(":checked"),
-                procedures_history: $("#procedures_history").val(),
+
                 other_notes: $("#other_notes").val(),
                 lesion_map_points: lesion_points,
                 suggestionBox: $("#suggestionBox").val()
@@ -1307,7 +1102,7 @@
                 a.download = `debug.json`;
             }
             else {
-                a.download = `${mrnValue}.json`;
+                a.download = $("#mrn").val() + '.json';
             } // Set the file name to MRN value
             document.body.appendChild(a); // Append to the body
             a.click(); // Trigger the download
@@ -1319,7 +1114,7 @@
             use aes to decrypt vs the security benefit.
             // Display JSON in the output div
             $("#jsonOutput").text(jsonData);
- 
+     
             var secretKey = "your-secret-key"; // Replace with your secret key
             var encryptedData = CryptoJS.AES.encrypt(jsonData, secretKey).toString();
             */
@@ -1332,6 +1127,18 @@
             if (debug) {
                 submit_form();
                 return;
+            }
+
+            if (!bloodChecked.checked && !salivaChecked.checked && !tissueChecked.checked) {
+                alert("Please select at least one sample type.");
+                return;
+            }
+
+            if (bloodChecked.checked) {
+                if ($("#green_tube").val() == 0 && $("#red_tube").val() == 0 && $("#purple_tube").val() == 0) {
+                    alert("Please enter the tube counts for blood samples");
+                    return;
+                }
             }
 
             var userInput = prompt("Please enter the MRN to confirm:");
@@ -1353,177 +1160,6 @@
             }
         });
     </script>
-
-    <script>
-        const discontinuedMedsList = [];
-        const currentMedsList = [];
-        const biologicsList = [];
-        const comorbiditiesList = [];
-
-        // wrap in an anonymous function so it only runs after DOM is loaded
-        $(function () {
-            // comorbidities autocomplete
-            $("#comorbidities").autocomplete({
-                source: comorbidities,
-                minLength: 1,
-                select: function (event, ui) {
-                    var selected = ui.item.value;
-                    addComorbidity(selected);
-                    this.value = ''; // Clear the input field
-                    return false;
-                }
-            });
-
-            $("#comorbidities").on("keypress", function (e) {
-                if (e.which === 13) { // Enter key
-                    var customTag = this.value.trim();
-                    if (customTag && !comorbidities.includes(customTag)) {
-                        addComorbidity(customTag);
-                        this.value = ''; // Clear the input field
-                    }
-                    e.preventDefault(); // Prevent form submission
-                }
-            });
-
-            function addComorbidity(comorbidity) {
-                var currentComorbidities = $('#selected-comorbidities').text();
-                if (!currentComorbidities.includes(comorbidity)) {
-                    $('#selected-comorbidities').append('<span class="badge bg-secondary me-1 comorbidity-item">' + comorbidity + '</span>');
-                    comorbiditiesList.push(comorbidity);
-                }
-            }
-
-            $(document).on('click', '.comorbidity-item', function () {
-                var comorbidity = $(this).text().trim(); // Get the text value
-                $(this).remove(); // Remove the span
-                var index = comorbiditiesList.indexOf(comorbidity);
-                if (index > -1) {
-                    comorbiditiesList.splice(index, 1); // Remove comorbidity from the list
-                }
-            });
-
-            // current meds autocomplete
-            $("#current_hs_meds").autocomplete({
-                source: hsMedications,
-                minLength: 1,
-                select: function (event, ui) {
-                    var selected = ui.item.value;
-                    addCurrMed(selected);
-                    this.value = ''; // Clear the input field
-                    return false;
-                }
-            });
-
-            $("#current_hs_meds").on("keypress", function (e) {
-                if (e.which === 13) { // Enter key
-                    var customTag = this.value.trim();
-                    if (customTag && !hsMedications.includes(customTag)) {
-                        addCurrMed(customTag);
-                        this.value = ''; // Clear the input field
-                    }
-                    e.preventDefault(); // Prevent form submission
-                }
-            });
-
-            function addCurrMed(med) {
-                var CurrMed = $('#selected-curr-hs-meds').text();
-                if (!CurrMed.includes(med)) {
-                    $('#selected-curr-hs-meds').append('<span class="badge bg-secondary me-1 currmed-item">' + med + '</span>');
-                    currentMedsList.push(med);
-                }
-            }
-
-            $(document).on('click', '.currmed-item', function () {
-                var currmed = $(this).text().trim(); // Get the text value
-                $(this).remove(); // Remove the span
-                var index = currentMedsList.indexOf(currmed);
-                if (index > -1) {
-                    currentMedsList.splice(index, 1);
-                }
-            });
-
-            // discontinued meds autocomplete
-            $("#disc_hs_meds").autocomplete({
-                source: hsMedications,
-                minLength: 1,
-                select: function (event, ui) {
-                    var selected = ui.item.value;
-                    addDiscMed(selected);
-                    this.value = ''; // Clear the input field
-                    return false;
-                }
-            });
-
-            $("#disc_hs_meds").on("keypress", function (e) {
-                if (e.which === 13) { // Enter key
-                    var customTag = this.value.trim();
-                    if (customTag && !hsMedications.includes(customTag)) {
-                        addDiscMed(customTag);
-                        this.value = ''; // Clear the input field
-                    }
-                    e.preventDefault(); // Prevent form submission
-                }
-            });
-
-            function addDiscMed(med) {
-                var CurrMed = $('#selected-disc-hs-meds').text();
-                if (!CurrMed.includes(med)) {
-                    $('#selected-disc-hs-meds').append('<span class="badge bg-secondary me-1 discmed-item">' + med + '</span>');
-                    discontinuedMedsList.push(med);
-                }
-            }
-
-            $(document).on('click', '.discmed-item', function () {
-                var discmed = $(this).text().trim(); // Get the text value
-                $(this).remove(); // Remove the span
-                var index = discontinuedMedsList.indexOf(discmed);
-                if (index > -1) {
-                    discontinuedMedsList.splice(index, 1);
-                }
-            });
-
-            // biologics list autocomplete
-            $("#biologics_list").autocomplete({
-                source: hsBiologics,
-                minLength: 1,
-                select: function (event, ui) {
-                    var selected = ui.item.value;
-                    addBiologic(selected);
-                    this.value = ''; // Clear the input field
-                    return false;
-                }
-            });
-
-            $("#biologics_list").on("keypress", function (e) {
-                if (e.which === 13) { // Enter key
-                    var customTag = this.value.trim();
-                    if (customTag && !hsMedications.includes(customTag)) {
-                        addBiologic(customTag);
-                        this.value = ''; // Clear the input field
-                    }
-                    e.preventDefault(); // Prevent form submission
-                }
-            });
-
-            function addBiologic(med) {
-                var CurrMed = $('#selected-biologics').text();
-                if (!CurrMed.includes(med)) {
-                    $('#selected-biologics').append('<span class="badge bg-secondary me-1 biologic-item">' + med + '</span>');
-                    biologicsList.push(med);
-                }
-            }
-
-            $(document).on('click', '.biologic-item', function () {
-                var bio_item = $(this).text().trim(); // Get the text value
-                $(this).remove(); // Remove the span
-                var index = biologicsList.indexOf(bio_item);
-                if (index > -1) {
-                    biologicsList.splice(index, 1);
-                }
-            });
-        });
-    </script>
-
 
 </body>
 
