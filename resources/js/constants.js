@@ -175,7 +175,7 @@ function ihs4_scr(ltd) {
     // Iterate over the dictionary
     for (const key in ltd) {
         const lesions = ltd[key];
-        totalNodule += lesions["Nodule"];
+        totalNodule += lesions["Inflammatory Nodule"] + lesions["Non-Inflammatory Nodule"];
         totalAbcess += lesions["Abcess"];
         totalDrainingTunnel += lesions["Draining Tunnel"];
         totalNonDrainingTunnel += lesions["Non-Draining Tunnel"];
@@ -185,9 +185,10 @@ function ihs4_scr(ltd) {
 }
 
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10149852/
-// PGA includes non-inflammatory nodules, assume all nodules are inflammatory
+// PGA includes non-inflammatory nodules
 function pga_scr(ltd) {
-    let totalNodule = 0;
+    let totalNodule_inf = 0;
+    let totalNodule_non_inf = 0;
     let totalAbcess = 0;
     let totalDrainingTunnel = 0;
     let totalNonDrainingTunnel = 0;
@@ -195,7 +196,8 @@ function pga_scr(ltd) {
     // Iterate over the dictionary
     for (const key in ltd) {
         const lesions = ltd[key];
-        totalNodule += lesions["Nodule"];
+        totalNodule_inf += lesions["Inflammatory Nodule"];
+        totalNodule_non_inf += lesions["Non-Inflammatory Nodule"];
         totalAbcess += lesions["Abcess"];
         totalDrainingTunnel += lesions["Draining Tunnel"];
         totalNonDrainingTunnel += lesions["Non-Draining Tunnel"];
@@ -205,10 +207,15 @@ function pga_scr(ltd) {
 
     // they cannot be clear, they must have HS so returning 1 is not a possibility
     if (ab_df == 0) {
-        if (totalNodule == 0) {
-            return 2;
+        if (totalNodule_inf == 0) {
+            if (totalNodule_non_inf == 0) {
+                return 1;
+            }
+            else {
+                return 2;
+            }
         }
-        if (totalNodule < 5) {
+        if (totalNodule_inf < 5) {
             return 3;
         }
         else {
@@ -216,7 +223,7 @@ function pga_scr(ltd) {
         }
     }
     else if (ab_df == 1) {
-        if (totalNodule == 0) {
+        if (totalNodule_inf == 0) {
             return 3;
         }
         else {
@@ -224,7 +231,7 @@ function pga_scr(ltd) {
         }
     }
     else if (ab_df < 6) {
-        if (totalNodule < 10) {
+        if (totalNodule_inf < 10) {
             return 4;
         }
         else {

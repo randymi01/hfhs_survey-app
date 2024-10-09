@@ -282,7 +282,9 @@
                         </div>
                         <div style="display: none; justify-content: center; margin-top: 10px;" id="drawing_buttons">
                             <button class="btn btn-outline-secondary" style="flex: 3.5; margin-right: 5px;"
-                                id="nodule_button">Inflammatory Nodule</button>
+                                id="inf_nodule_button">Inflamm. Nodule</button>
+                            <button class="btn btn-outline-secondary" style="flex: 3.5; margin-right: 5px;"
+                                id="non-inf_nodule_button">Non-Inflamm. Nodule</button>
                             <button class="btn btn-outline-secondary" style="flex: 1; margin-right: 5px;"
                                 id="abcess_button">Abcess</button>
                             <button class="btn btn-outline-secondary" style="flex: 2.5; margin-right: 5px;"
@@ -352,7 +354,7 @@
             <br>
             <label class="h4">Family History</label>
             <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
-            <div class="form-group">
+            <div class="form-group" id="family_parent">
                 <label class="form-label">Does the patient have a family history of HS?</label>
                 <div class="form-check">
                     <input type="radio" id="family_history_yes" class="form-check-input" name="family_history"
@@ -369,12 +371,11 @@
                         value="unknown">
                     <label class="form-check-label" for="family_history_unknown">Unknown</label>
                 </div>
-
+                <br>
                 <div id="familyContainer" style="display: none;">
-                    <br>
-                    <label class="form-label">Family Member Contact Information</label>
+                    <label class="form-label" id="family_title"><u>Family Member 1:</u></label>
                     <div class="form-group">
-                        <label for="familyRelation">Relation</label>
+                        <label>Relation</label>
                         <input type="text" class="form-control" id="familyRelation" placeholder="Relation to Patient">
                     </div>
                     <div class="form-group">
@@ -434,7 +435,7 @@
                             <div class="form-group col-md-4">
                                 <label for="familyState">State</label>
                                 <input list="states" id="familyState" name="familyState" class=form-control />
-                                <datalist id="states">
+                                <datalist>
                                     <option value="AL">
                                     <option value="AK">
                                     <option value="AZ">
@@ -492,10 +493,10 @@
                                 <input type="text" class="form-control" id="familyZip">
                             </div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="familyNotes">Notes</label>
-                            <input type="text" class="form-control" id="familyNotes" name="familyNotes">
-                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="familyNotes">Notes</label>
+                        <input type="text" class="form-control" id="familyNotes" name="familyNotes">
                     </div>
                     <button type="button" class="addRelative btn btn-primary" style="margin-top: 10px;">Add Another
                         Relative</button>
@@ -588,6 +589,7 @@
     <script>
 
         // DEBUG
+        const family_container_base = document.getElementById('familyContainer').innerHTML;
         const debug = true;
         const bloodChecked = document.getElementById('blood_checked');
         const salivaChecked = document.getElementById('saliva_checked');
@@ -607,6 +609,7 @@
         const ctx = canvas.getContext("2d");
         const relation_id = document.getElementById('relation_id');
         const new_relation_info = document.getElementById('new_relation_info');
+        const family_parent = document.getElementById('family_parent');
 
         const lesion_canvas = document.getElementById('lesion_map');
         const ltx = lesion_canvas.getContext("2d");
@@ -621,15 +624,16 @@
         const drawing_buttons = document.getElementById("drawing_buttons");
         let point_style;
         let bodyImage;
+        let number_of_relations = 0;
 
-        // [nodules, abcess, draining tunnel, non-draining tunnel]
+        // [non inf nodules, inf nodules, abcess, draining tunnel, non-draining tunnel]
         let lesiontypesdict = {
-            "axillae": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-            "mammary": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-            "genital": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-            "buttocks": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-            "other_upper": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-            "other_lower": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 }
+            "axillae": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "mammary": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "genital": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "buttocks": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "other_upper": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+            "other_lower": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 }
         };
         let lesioncountsdict = { "axillae": 0, "mammary": 0, "genital": 0, "buttocks": 0, "other_upper": 0, "other_lower": 0 };
         let gender;
@@ -660,32 +664,38 @@
             formFields.forEach(field => field.removeAttribute('required'));
         }
 
-        function cloneFamilyContainer(container) {
-            const clone = container.cloneNode(true);
+        function appendFamilyContainer() {
+            let new_family_container = document.createElement('div');
+            number_of_relations++;
+            new_family_container.id = 'familyContainer' + number_of_relations;
+            new_family_container.innerHTML = family_container_base;
 
-            // Reset the cloned inputs
-            const inputs = clone.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.value = '';
-                if (input.type === 'radio') {
-                    input.checked = false;
-                }
-            });
+            // change title of new section
+            new_family_container.querySelector('#family_title').innerHTML = '<u>Family Member ' + number_of_relations + ':</u>';
+
+            // update ids and names
+            new_family_container.querySelector('#familyRelation').id = 'familyRelation' + '_' + number_of_relations;
+            new_family_container.querySelector('#family_collect_yes').id = 'family_collect_yes' + '_' + number_of_relations;
+            new_family_container.querySelector('#family_collect_yes' + '_' + number_of_relations).name = 'family_collect' + '_' + number_of_relations;
+            new_family_container.querySelector('#family_collect_no').id = 'family_collect_no' + '_' + number_of_relations;
+            new_family_container.querySelector('#family_collect_no' + '_' + number_of_relations).name = 'family_collect' + '_' + number_of_relations;
+
+
+            new_family_container.querySelector('#relation_id').id = 'relation_id' + '_' + number_of_relations;
+            new_family_container.querySelector('#relation_enrollment_number').id = 'relation_enrollment_number' + '_' + number_of_relations;
+            new_family_container.querySelector('#new_relation_info').id = 'new_relation_info' + '_' + number_of_relations;
+            new_family_container.querySelector('#rel_first_name').id = 'rel_first_name' + '_' + number_of_relations;
+            new_family_container.querySelector('#rel_last_name').id = 'rel_last_name' + '_' + number_of_relations;
+            new_family_container.querySelector('#familyEmail').id = 'familyEmail' + '_' + number_of_relations;
+            new_family_container.querySelector('#familyAddress').id = 'familyAddress' + '_' + number_of_relations;
+            new_family_container.querySelector('#familyCity').id = 'familyCity' + '_' + number_of_relations;
+            new_family_container.querySelector('#familyState').id = 'familyState' + '_' + number_of_relations;
+            new_family_container.querySelector('#familyZip').id = 'familyZip' + '_' + number_of_relations;
+            new_family_container.querySelector('#familyNotes').id = 'familyNotes' + '_' + number_of_relations;
 
             // Append the cloned container to the form
-            container.parentNode.appendChild(clone);
-
-            // Add event listener to the new button
-            const addButton = clone.querySelector('.addRelative');
-            addButton.addEventListener('click', function () {
-                cloneFamilyContainer(clone);
-            });
+            family_parent.appendChild(new_family_container);
         }
-
-        // Add event listener for the initial "Add Another Relative" button
-        document.querySelector('.addRelative').addEventListener('click', function () {
-            cloneFamilyContainer(document.getElementById('familyContainer'));
-        });
 
         // Get all buttons within the container
         const buttons = drawing_buttons.querySelectorAll('button');
@@ -715,8 +725,11 @@
 
                 // Perform action based on which button was clicked
                 switch (buttonId) {
-                    case 'nodule_button':
-                        point_style = "Nodule";
+                    case 'inf_nodule_button':
+                        point_style = "Inflammatory Nodule";
+                        break;
+                    case 'non-inf_nodule_button':
+                        point_style = "Non-Inflammatory Nodule";
                         break;
                     case 'abcess_button':
                         console.log('Abcess button clicked');
@@ -752,22 +765,68 @@
             radio.addEventListener('change', function () {
                 if (this.value === 'yes') {
                     familyContainer.style.display = 'block'; // Show pack history input if "Yes" is selected
+                    number_of_relations++;
                 } else {
                     familyContainer.style.display = 'none'; // Hide it if "No" or "Unknown" is selected
+                    number_of_relations--;
                 }
             });
         });
 
-        family_collect_radios.forEach(radio => {
-            radio.addEventListener('change', function () {
-                if (this.value === 'yes') {
-                    new_relation_info.style.display = 'none';
-                    relation_id.style.display = 'block'; // Show pack history input if "Yes" is selected
+
+        // add event delegator for the family buttons
+        function canBeInt(str) {
+            // Trim whitespace from the string and attempt to parse it as an integer
+            const parsed = parseInt(str, 10);
+            // Check if the parsed value is a number and equals the original string when converted to string
+            return !isNaN(parsed) && parsed.toString() === str;
+        }
+
+        family_parent.addEventListener('click', function (event) {
+            // parent family_collect listener
+            if (event.target.name == 'family_collect') {
+                if (event.target.value === 'yes') {
+                    document.getElementById('relation_id').style.display = 'block';
+                    document.getElementById('new_relation_info').style.display = 'none';
                 } else {
-                    relation_id.style.display = 'none'; // Hide it if "No" or "Unknown" is selected
-                    new_relation_info.style.display = 'block';
+                    document.getElementById('relation_id').style.display = 'none';
+                    document.getElementById('new_relation_info').style.display = 'block';
                 }
-            });
+                return;
+            }
+
+            // Add event listener for the initial "Add Another Relative" button
+            if (event.target.classList.contains('addRelative')) {
+                event.target.remove();
+                appendFamilyContainer();
+                return;
+            };
+
+            // get event target relation number
+            let target_id = event.target.id;
+
+            // if target id is undefined
+            if (!target_id) {
+                console.log("target id is undefined");
+                return;
+            }
+            let relation_number = target_id.split('_')[target_id.split('_').length - 1].trim();
+            if (!canBeInt(relation_number)) {
+                console.log(target_id);
+                console.log("invalid relation number");
+                return;
+            }
+
+            // children family_collect listener
+            if (event.target.name.startsWith('family_collect')) {
+                if (event.target.value === 'yes') {
+                    document.getElementById('relation_id' + '_' + relation_number).style.display = 'block';
+                    document.getElementById('new_relation_info' + '_' + relation_number).style.display = 'none';
+                } else {
+                    document.getElementById('relation_id' + '_' + relation_number).style.display = 'none';
+                    document.getElementById('new_relation_info' + '_' + relation_number).style.display = 'block';
+                }
+            }
         });
 
 
@@ -974,12 +1033,12 @@
             ltx.clearRect(0, 0, lesion_canvas.width, lesion_canvas.height);
             lesioncountsdict = { "axillae": 0, "mammary": 0, "genital": 0, "buttocks": 0, "other_upper": 0, "other_lower": 0 };
             lesiontypesdict = {
-                "axillae": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-                "mammary": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-                "genital": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-                "buttocks": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-                "other_upper": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
-                "other_lower": { "Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 }
+                "axillae": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "mammary": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "genital": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "buttocks": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "other_upper": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 },
+                "other_lower": { "Non-Inflammatory Nodule": 0, "Inflammatory Nodule": 0, "Abcess": 0, "Draining Tunnel": 0, "Non-Draining Tunnel": 0 }
             };
             updateCounters();
         }
@@ -1011,21 +1070,25 @@
             ltx.beginPath();
             ltx.fillStyle = "black";
             ltx.strokeStyle = "black";
-            if (ps == "Nodule") {
+            if (ps == "Inflammatory Nodule") {
                 ltx.arc(x, y, 2.5, 0, Math.PI * 2);
                 ltx.fill();
             }
             else if (ps == "Draining Tunnel") {
                 ltx.font = "15px Arial";
-                ltx.fillText("+", x, y);
+                ltx.fillText("=", x, y);
             }
             else if (ps == "Non-Draining Tunnel") {
                 ltx.font = "12px Arial";
-                ltx.fillText("x", x, y);
+                ltx.fillText("≠", x, y);
             }
-            else if (ps == "Abcess") {
+            else if (ps == "Non-Inflammatory Nodule") {
                 ltx.arc(x, y, 2.5, 0, Math.PI * 2);
                 ltx.stroke();
+            }
+            else if (ps == "Abcess") {
+                ltx.font = "15px Arial";
+                ltx.fillText("x", x, y);
             }
         }
 
