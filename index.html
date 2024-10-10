@@ -257,17 +257,26 @@
                                 </tr>
 
                                 <tr>
-                                    <td><u>HS-IGA Score</u></td>
+                                    <td data-toggle="tooltip" title="Score ranging from 0 (minimal) to 5 (very severe)">
+                                        <u>HS-IGA Score</u>
+                                    </td>
                                     <td><input type="number" id="hs-iga" name="hs-iga" class="form-control number-box"
                                             placeholder="0" min="0" readonly></td>
                                 </tr>
                                 <tr>
-                                    <td><u>IHS4 Score</u></td>
+                                    <td data-toggle="tooltip"
+                                        title="A total score of 3 or less signifies mild, 4-10 signifies moderate and 11 or higher signifies severe disease">
+                                        <u>IHS4
+                                            Score</u>
+                                    </td>
                                     <td><input type="number" id="ihs4" name="ihs4" class="form-control number-box"
                                             placeholder="0" min="0" readonly></td>
                                 </tr>
                                 <tr>
-                                    <td><u>HS-PGA Score</u></td>
+                                    <td data-toggle="tooltip" title="Score ranging from 1 (clear) to 6 (very severe)">
+                                        <u>HS-PGA
+                                            Score</u>
+                                    </td>
                                     <td><input type="number" id="pga" name="pga" class="form-control number-box"
                                             placeholder="0" min="0" readonly></td>
                                 </tr>
@@ -423,9 +432,11 @@
 
     <!-- jQuery, Bootstrap JS, and jQuery UI -->
     <script src="./resources/js/jquery-3.5.1.min.js"></script>
+    <script src="./resources/js/popper.min.js"></script>
     <script src="./resources/js/jquery-ui.min.js"></script>
     <script src="./resources/js/bootstrap.min.js"></script>
     <script src="./resources/js/crypto-js.min.js"></script>
+
 
     <!-- load medicines list -->
     <script src="./resources/js/constants.js"></script>
@@ -459,6 +470,10 @@
         let point_style;
         let bodyImage;
         let number_of_relations = 0;
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
         // [non inf nodules, inf nodules, abcess, draining tunnel, non-draining tunnel]
         let lesiontypesdict = {
