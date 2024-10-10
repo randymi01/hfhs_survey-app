@@ -185,7 +185,7 @@ function ihs4_scr(ltd) {
 }
 
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10149852/
-// PGA includes non-inflammatory nodules
+// PGA includes non-inflammatory nodules (physician)
 function pga_scr(ltd) {
     let totalNodule_inf = 0;
     let totalNodule_non_inf = 0;

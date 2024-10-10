@@ -13,6 +13,21 @@
 [DONE] Send out zip
 [DONE] add family relation
 
-
 QoL Questionairre
-https://www.researchgate.net/figure/The-DLQI-questionnaire_tbl1_267746857
+<https://www.researchgate.net/figure/The-DLQI-questionnaire_tbl1_267746857>
+
+Anu Feedback
+
+[TODO]Sex Get rid of other
+[TODO]Add WSU/PSX to the enrollment number field
+[TODO]Turn BMI into height and weight and convert it into a calculated field
+[TODO]Split Race into Race and Ethnicity
+[TODO]Add number of years for smoking and calculate total packs (number of years * pack history)
+[TODO]Replace the treatment forms with tables where each new medicine is a row where you can list the duration and dosage
+[TODO]When patient selects tissue, add option for C02 laser or plastic surgery, then a body map for where the sample was taken from (add it in new section)
+[TODO]For surgeries, add number of surgery and a checkbox of sites undergoing surgery
+
+Lab meeting questions:
+ask how best to represent followup information
+Add VAS Score and Patient Global Assessment (these are pain scores to be done by patients)
+    Ask in lab meeting whether to include patient QoL into the form
