@@ -121,6 +121,7 @@ function handleFile_drop(event) {
     var fileInput = document.getElementById("fileInput");
     var file;
 
+    /*
     // Check if the file is dropped
     if (event.dataTransfer.items) {
         // Use DataTransferItemList interface to access the file(s)
@@ -134,35 +135,37 @@ function handleFile_drop(event) {
         }
 
     }
-
-    if (file && file.type === 'application/json') {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            try {
-                var jsonData = JSON.parse(e.target.result);
-                if (!files_exist) {
-                    patient_id_const = jsonData.PatientID;
-                }
-                else {
-                    if (jsonData.PatientID != patient_id_const) {
-                        alert("Please upload files for the same patient");
-                        return;
+        */
+    for (const file of event.dataTransfer.files) {
+        if (file && file.type === 'application/json') {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    var jsonData = JSON.parse(e.target.result);
+                    if (!files_exist) {
+                        patient_id_const = jsonData.PatientID;
                     }
-                    if (visit_numbers.includes(jsonData.visit_number)) {
-                        alert("Duplicate visit number: " + jsonData.visit_number);
-                        return;
+                    else {
+                        if (jsonData.PatientID != patient_id_const) {
+                            alert("Please upload files for the same patient");
+                            return;
+                        }
+                        if (visit_numbers.includes(jsonData.visit_number)) {
+                            alert("Duplicate visit number: " + jsonData.visit_number);
+                            return;
+                        }
                     }
+                    console.log('JSON Data:', jsonData);
+                    // Further processing of jsonData
+                    displayConfirmation(file.name, jsonData);
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
                 }
-                console.log('JSON Data:', jsonData);
-                // Further processing of jsonData
-                displayConfirmation(file.name, jsonData);
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-            }
-        };
-        reader.readAsText(file);
-    } else {
-        alert('Only JSON files are accepted.');
+            };
+            reader.readAsText(file);
+        } else {
+            alert('Only JSON files are accepted.');
+        }
     }
 }
 
@@ -185,17 +188,18 @@ downloadTableButton.addEventListener('click', function () {
 // make the plot
 
 function plot_hiSCR() {
-    const labels = jsonDatas.map(entry => parseInt(entry.visit_number, 10));
-    const infNoduleCounts = jsonDatas.map(entry => entry.inf_nodule_count);
-    const abcessCounts = jsonDatas.map(entry => entry.abcess_count);
-    const drainingFistulaCount = jsonDatas.map(entry => entry.draining_tunnel_count);
-    const ihs4Scores = jsonDatas.map(entry => entry.ihs4_score);
-    const igaScores = jsonDatas.map(entry => entry.iga_score);
-    const pgaScores = jsonDatas.map(entry => entry.pga_score);
+    const sortedJsonDatas = jsonDatas.slice().sort((a, b) => a.visit_number - b.visit_number);
+    const labels = sortedJsonDatas.map(entry => parseInt(entry.visit_number, 10));
+    const infNoduleCounts = sortedJsonDatas.map(entry => entry.inf_nodule_count);
+    const abcessCounts = sortedJsonDatas.map(entry => entry.abcess_count);
+    const drainingFistulaCount = sortedJsonDatas.map(entry => entry.draining_tunnel_count);
+    const ihs4Scores = sortedJsonDatas.map(entry => entry.ihs4_score);
+    const igaScores = sortedJsonDatas.map(entry => entry.iga_score);
+    const pgaScores = sortedJsonDatas.map(entry => entry.pga_score);
 
-    const HiSCR50_scores = jsonDatas.map(entry => HiSCR_50(entry.inf_nodule_count, entry.abcess_count, entry.draining_tunnel_count));
+    const HiSCR50_scores = sortedJsonDatas.map(entry => HiSCR_50(entry.inf_nodule_count, entry.abcess_count, entry.draining_tunnel_count));
 
-    const HiSCR75_scores = jsonDatas.map(entry => HiSCR_75(entry.inf_nodule_count, entry.abcess_count, entry.draining_tunnel_count));
+    const HiSCR75_scores = sortedJsonDatas.map(entry => HiSCR_75(entry.inf_nodule_count, entry.abcess_count, entry.draining_tunnel_count));
 
     const ctx = document.getElementById('countChart').getContext('2d');
     const stx = document.getElementById('scoreChart').getContext('2d');
