@@ -15,17 +15,19 @@
 
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top navbar-dark">
         <div class="navbar-container">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Lesion Mapper</a>
+                    <b>
+                        <a class="nav-link white-text" href="#">Lesion Mapper</a>
+                    </b>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Analysis</a>
+                    <a class="nav-link white-text" href="./analysis.html">Analysis</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/randymi01/hfhs_survey-app"
+                    <a class="nav-link white-text" href="https://github.com/randymi01/hfhs_survey-app"
                         target="_blank">Repository</a>
                 </li>
             </ul>
@@ -42,7 +44,10 @@
             <!-- Text Box -->
             <div class="form-group">
                 <label for="mrn">Patient ID</label>
-                <input type="text" class="form-control" name="mrn" id="mrn" required>
+                <input type="text" class="form-control" name="mrn" id="mrn" required readonly>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="generate_mrn">Generate Patient ID</button>
             </div>
 
             <div class="form-group">
@@ -53,6 +58,7 @@
                     <option value="Female">Female</option>
                 </select>
             </div>
+
             </br>
             <label class="h4">Lesion Location Counts</label>
             <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
@@ -181,6 +187,7 @@
         const lesionTable = document.getElementById('lesion_table');
         const lesion_undo = document.getElementById("clear_last_lesion");
         const drawing_buttons = document.getElementById("drawing_buttons");
+        const patient_id_generate = document.getElementById("generate_mrn");
         let point_style;
         let bodyImage;
         let number_of_relations = 0;
@@ -238,6 +245,23 @@
                 btn.classList.add('btn-outline-secondary');
             });
         }
+
+        const adjectives = ["blue", "big", "patient", "knowledgeable",
+            "quick", "bright", "happy", "brave", "calm",
+            "eager", "fierce", "gentle", "jolly", "kind",
+            "lively", "mighty", "polite", "proud", "prudent"];
+
+        const nouns = ["fox", "apple", "banana", "carrot", "dog",
+            "elephant", "fish", "giraffe", "horse", "iguana",
+            "jaguar", "kangaroo", "lion", "monkey", "newt",
+            "owl", "penguin", "quail", "rabbit", "snake",
+            "tiger", "unicorn", "vulture", "whale", "xerus",
+            "yak", "zebra"];
+
+        patient_id_generate.addEventListener('click', function () {
+            let mrn = adjectives[Math.floor(Math.random() * adjectives.length)] + "-" + nouns[Math.floor(Math.random() * nouns.length)];
+            document.getElementById('mrn').value = mrn;
+        });
 
         // Add click event listener to each button
         buttons.forEach(button => {
@@ -604,151 +628,15 @@
             }
         });
 
-        function get_age(dob, date) {
 
-            const dob_y = dob.getFullYear();
-
-            const dob_m = dob.getMonth();
-
-            const dob_d = dob.getDate();
-
-
-
-            const d_y = date.getFullYear();
-
-            const d_m = date.getMonth();
-
-            const d_d = date.getDate();
-
-
-
-            let age = d_y - dob_y
-
-            if (d_m > dob_m || (d_m == dob_m && d_d >= dob_d)) {
-
-                age += 1;
-
-            }
-
-
-
-            return age;
-
-        }
-
-        function submit_form() {
-            let race_val = $("#race").val();
-
-            if (race_val == "other") {
-
-                race_val = $("#race-other").val();
-
-            }
-            let smokingValue;
-            for (const radio of smoking_radios) {
-                if (radio.checked) {
-                    smokingValue = radio.value;
-                    break;
-                }
-            }
-
-            let recdrugsValue;
-
-            for (const radio of drug_radios) {
-                if (radio.checked) {
-                    recdrugsValue = radio.value;
-                    break;
-                }
-            }
-
-            let family_history_list = [];
-            if (number_of_relations > 0) {
-                for (let i = 1; i <= number_of_relations; i++) {
-                    if (i == 1) {
-
-                        if (document.getElementById("family_collect_yes").checked) {
-                            family_history_list.push({
-                                relation: document.getElementById("familyRelation").value,
-                                enrollment_number: document.getElementById("relation_enrollment_number").value
-                            });
-                        }
-                        else {
-                            family_history_list.push({
-                                relation: document.getElementById("familyRelation").value,
-                                first_name: document.getElementById("rel_first_name").value,
-                                last_name: document.getElementById("rel_last_name").value,
-                                email: document.getElementById("familyEmail").value,
-                                phone: document.getElementById("familyPhone").value,
-                                address: document.getElementById("familyAddress").value,
-                                city: document.getElementById("familyCity").value,
-                                state: document.getElementById("familyState").value,
-                                zip: document.getElementById("familyZip").value,
-                                notes: document.getElementById("familyNotes").value
-                            });
-                        }
-                    }
-                    else {
-                        if (document.getElementById("family_collect_yes" + '_' + i).checked) {
-                            family_history_list.push({
-                                relation: document.getElementById("familyRelation" + '_' + i).value,
-                                enrollment_number: document.getElementById("relation_enrollment_number" + '_' + i).value
-                            });
-                        }
-                        else {
-                            family_history_list.push({
-                                relation: document.getElementById("familyRelation" + '_' + i).value,
-                                first_name: document.getElementById("rel_first_name" + '_' + i).value,
-                                last_name: document.getElementById("rel_last_name" + '_' + i).value,
-                                email: document.getElementById("familyEmail" + '_' + i).value,
-                                phone: document.getElementById("familyPhone" + '_' + i).value,
-                                address: document.getElementById("familyAddress" + '_' + i).value,
-                                city: document.getElementById("familyCity" + '_' + i).value,
-                                state: document.getElementById("familyState" + '_' + i).value,
-                                zip: document.getElementById("familyZip" + '_' + i).value,
-                                notes: document.getElementById("familyNotes" + '_' + i).value
-                            });
-                        }
-                    }
-                }
-
-            }
-
-            const sample_type = [];
-
-            // Check the state of each checkbox and get its value if checked
-            // Add the value to the array if the checkbox is checked
-            if (bloodChecked.checked) {
-                sample_type.push(bloodChecked.value);
-            }
-            if (salivaChecked.checked) {
-                sample_type.push(salivaChecked.value);
-            }
-            if (tissueChecked.checked) {
-                sample_type.push(tissueChecked.value);
-            }
-
+        function submit_form(visitNumber) {
             let today = new Date();
-
             var formData = {
                 date: today,
-                disease_state: $("#disease_state").val(),
-                enrollment_number: $("#enrollment_number").val(),
-                collection_site: $("#collection_site").val(),
-                sample_type: sample_type,
-                blood_g: $("#green_tube").val(),
-                blood_r: $("#red_tube").val(),
-                blood_p: $("#purple_tube").val(),
-                collector_name: ($("#col_first_name").val() + ' ' + $("#col_last_name").val()).toLowerCase(),
-                MRN: $("#mrn").val(),
+                visit_number: visitNumber,
+                PatientID: $("#mrn").val(),
                 first_name: $("#first_name").val(),
                 last_name: $("#last_name").val(),
-                dob: $("#dob").val(),
-                age: get_age(new Date($("#dob").val()), today),
-                race: race_val,
-                sex: $("#sex").val(),
-                bmi: $("#bmi").val(),
-                obesity: $("#bmi").val() > 30,
-                hurley: $("#hurley").val(),
                 axillae: $("#axillae").val(),
                 buttocks: $("#buttocks").val(),
                 mammary: $("#mammary").val(),
@@ -760,22 +648,10 @@
                 iga_score: $("#hs-iga").val(),
                 ihs4_score: $("#ihs4").val(),
                 pga_score: $("#pga").val(),
-                family_history: $("#family_history").is(":checked"),
-                family_contact: family_history_list,
-                smoking_history: smokingValue,
-                pack_history: $("#packHistory").val(),
-                recdrugs_usage: recdrugsValue,
-                comorbidities: comorbiditiesList, // Assuming this will hold selected comorbidities
-                current_hs_meds: currentMedsList, // Assuming this will hold selected current meds
-                disc_hs_meds: discontinuedMedsList, // Assuming this will hold selected discontinued meds
-                biologics_history: $("#biologics_history").is(":checked"),
-                biologics_list: biologicsList,
-                biologics_response: $("#biologics_response").val(),
-                procedures_history_check: $("#procedures_history_check").is(":checked"),
-                procedures_history: $("#procedures_history").val(),
-                other_notes: $("#other_notes").val(),
-                lesion_map_points: lesion_points,
-                suggestionBox: $("#suggestionBox").val()
+                abcess_count: get_abcesses(lesiontypesdict),
+                inf_nodule_count: get_inf_nodules(lesiontypesdict),
+                draining_tunnel_count: get_draining_fistulas(lesiontypesdict),
+
             };
 
             // Convert form data to JSON
@@ -791,7 +667,7 @@
                 a.download = `debug.json`;
             }
             else {
-                a.download = $("#mrn").val() + '.json';
+                a.download = $("#mrn").val() + '_' + visitNumber + '.json';
             } // Set the file name to MRN value
             document.body.appendChild(a); // Append to the body
             a.click(); // Trigger the download
@@ -818,30 +694,18 @@
                 return;
             }
 
-            if (!bloodChecked.checked && !salivaChecked.checked && !tissueChecked.checked) {
-                alert("Please select at least one sample type.");
-                return;
-            }
+            var userInput = prompt("Please enter visit number");
+            var visitNumber = parseInt(userInput.trim(), 10);
 
-            if (bloodChecked.checked) {
-                if ($("#green_tube").val() == 0 && $("#red_tube").val() == 0 && $("#purple_tube").val() == 0) {
-                    alert("Please enter the tube counts for blood samples");
-                    return;
-                }
-            }
-
-            var userInput = prompt("Please enter the MRN to confirm:");
-
-            var mrnValue = $("#mrn").val();
             if (userInput !== null) { // Check if the user didn't cancel the prompt
-                if (userInput.trim() === mrnValue) {
+                if (Number.isInteger(visitNumber)) {
                     // If numbers match, you can proceed to submit the form or do whatever is needed
-                    alert("Numbers match. Submitting the form...");
+                    alert("Downloading lesion map as JSON file");
                     // Collect form data
-                    submit_form();
+                    submit_form(visitNumber);
                 }
                 else {
-                    alert("The number you entered does not match the MRN field.");
+                    alert("Aborting, invalid visit number, must be an integer");
                 }
             }
             else {

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HS Patient Lesion Mapper</title>
+    <!-- Bootstrap CSS -->
+    <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery UI for text suggestions -->
+    <link rel="stylesheet" href="./resources/css/jquery-ui.css">
+    <link href="./resources/css/custom.css" rel="stylesheet">
+    <link href="./resources/img/hfhs.ico" rel="shortcut icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./resources/js/jquery-3.5.1.min.js"></script>
+    <script src="./resources/js/popper.min.js"></script>
+    <script src="./resources/js/jquery-ui.min.js"></script>
+    <script src="./resources/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top navbar-dark">
+        <div class="navbar-container">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link white-text" href="./index.html">Lesion Mapper</a>
+                </li>
+                <li class="nav-item">
+                    <b>
+                        <a class="nav-link white-text" href="#">Analysis</a>
+                    </b>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link white-text" href="https://github.com/randymi01/hfhs_survey-app"
+                        target="_blank">Repository</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="custom-container">
+        <h2>HS Patient Lesion Mapper Analysis</h2>
+        <hr style="border: none; border-top: 1px solid black; margin: 0 0 10px 0">
+
+        <!-- File Upload Form -->
+        <div id="dropArea" onclick="openFileInput()" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <p> <i>Drag &amp; Drop JSON Files Here</i></p>
+            <input type="file" id="fileInput" onchange="handleFile()" accept=".json">
+        </div>
+
+        <!-- loaded files table -->
+        <br>
+        <label id="fileTableLabel" style="display: none;" class="h4"></label>
+        <table id="fileTable" class="table table-striped table-hover" style="display: none;">
+            <thead>
+                <tr>
+                    <th scope="col">File Name</th>
+                    <th scope="col">Visit Number</th>
+                    <th scope="col">Total Abcess</th>
+                    <th scope="col">Total Nodules</th>
+                    <th scope="col">Total Draining Fistulas</th>
+                    <th scope="col">IHS-4 Score</th>
+                    <th scope="col">HS-IGA Score</th>
+                    <th scope="col">HS-PGA Score</th>
+                    <th scope="col">Baseline</th>
+                </tr>
+            </thead>
+            <tbody id="fileTableBody">
+            </tbody>
+        </table>
+        <span class="d-flex">
+            <button class="btn btn-secondary" id="downloadTableBtn" style="display: none; margin-right: 10px;">Download
+                as Excel</button>
+            <button class="btn btn-primary" id="plotHiSCRBtn" style="display: none;">Plot HiSCR</button>
+        </span>
+        <canvas id="countChart" width="400" height="200"></canvas>
+        <canvas id="scoreChart" width="400" height="200"></canvas>
+</body>
+
+<script src="./resources/js/analysis.js"></script>

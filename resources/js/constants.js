@@ -184,6 +184,40 @@ function ihs4_scr(ltd) {
     return totalNodule + 2 * totalAbcess + 4 * totalDrainingTunnel
 }
 
+function get_inf_nodules(ltd) {
+    let totalNodule_inf = 0;
+
+    // Iterate over the dictionary
+    for (const key in ltd) {
+        const lesions = ltd[key];
+        totalNodule_inf += lesions["Inflammatory Nodule"];
+    }
+
+    return totalNodule_inf;
+}
+
+function get_abcesses(ltd) {
+    let totalAbcess = 0;
+
+    // Iterate over the dictionary
+    for (const key in ltd) {
+        const lesions = ltd[key];
+        totalAbcess += lesions["Abcess"];
+    }
+    return totalAbcess;
+}
+
+function get_draining_fistulas(ltd) {
+    let totalDrainingTunnel = 0;
+
+    // Iterate over the dictionary
+    for (const key in ltd) {
+        const lesions = ltd[key];
+        totalDrainingTunnel += lesions["Draining Tunnel"];
+    }
+    return totalDrainingTunnel;
+}
+
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10149852/
 // PGA includes non-inflammatory nodules (physician)
 function pga_scr(ltd) {

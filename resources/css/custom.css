@@ -66,13 +66,33 @@ label {
     font-size: 16px;
 }
 
-.navbar-custom .navbar-brand,
+
 .navbar-custom .nav-link {
     color: white;
 }
 
+.white-text {
+    color: white !important;
+}
+
+.white-text:hover {
+    color: #c0c0c0 !important;
+    /* Change to grey on hover */
+}
+
+
 .navbar-light {
     font-color: white !important;
+}
+
+#fileInput {
+    display: none;
+}
+
+.navbar {
+    -webkit-box-shadow: 0 16px 12px -12px #999;
+    -moz-box-shadow: 0 16px 12px -12px #999;
+    box-shadow: 0 16px 12px -12px #999;
 }
 
 .navbar-custom .nav-link:hover {
@@ -94,4 +114,15 @@ label {
     max-width: 100%;
     margin: 0 auto;
     padding-top: 20px;
+}
+
+#dropArea {
+    border: 2px dashed #ccc;
+    padding: 80px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#dropArea:hover {
+    border-color: #007bff;
 }
