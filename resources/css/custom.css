@@ -1,3 +1,8 @@
+body {
+    margin-top: 60px;
+    /* Adjust this value based on your navbar height */
+}
+
 .number-box {
     width: 60px;
     /* Adjust width to resemble a checkbox */
@@ -48,4 +53,45 @@ label {
 .required-label::after {
     content: " *";
     color: red;
+}
+
+.navbar-custom {
+    background: linear-gradient(90deg, #030e59, #051db5);
+    /* Example gradient from dark blue to light blue */
+}
+
+.nav-link {
+    color: white;
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: white;
+}
+
+.navbar-light {
+    font-color: white !important;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #c0c0c0;
+    /* Slight hover effect for a polished look */
+}
+
+.navbar-container {
+    margin: 0 auto;
+    /* Centers the container */
+    display: flex;
+    justify-content: flex-end;
+    width: 83.33%;
+}
+
+.custom-container {
+    width: 83.33%;
+    /* Custom width */
+    max-width: 100%;
+    margin: 0 auto;
+    padding-top: 20px;
 }
